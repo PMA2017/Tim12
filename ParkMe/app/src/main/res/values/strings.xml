@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">ParkirajMe</string>
+    <string name="appImage">AppImage</string>
+    <string name="splash_screen">Splash screen</string>
+
+    <string name="username">Korisničko ime</string>
+    <string name="password">Lozinka</string>
+    <string name="sign_up_link">Nemate nalog? Registrujte se</string>
+
+    <string name="prompt_name">Ime</string>
+    <string name="prompt_surname">Prezime</string>
+    <string name="prompt_username">Korisničko ime</string>
+    <string name="prompt_email">E-mail adresa</string>
+    <string name="registration_number">Registracijski broj automobila</string>
+    <string name="prompt_password">Lozinka</string>
+    <string name="action_sign_in">Prijava</string>
+    <string name="confirm_password">Ponovite lozinku</string>
+    <string name="create_account">Registrujte se</string>
+
+    <string name="no_valid_email_message">Selected account doesn\'t have a valid email, please select another one.</string>
+    <string name="select_account_with_email_message">Please select an account with a valid email address.</string>
+
+    <string name="facebook_app_id">1910093245904650</string>
+    <string name="google_api_id">AIzaSyDbJ0ls2D2-aIVoAuJUerkCLTiQ9SsWaWQ</string>
+
+    <string name="search_action">Pretraga</string>
+    <string name="nearest_action">Najbliži parking</string>
+    <string name="duration_action">Trajanje</string>
+
+    <string name="parking_name">Naziv</string>
+    <string name="parking_address">Adresa</string>
+    <string name="parking_full">Procenat popunjenosti</string>
+    <string name="prices">Cene</string>
+    <string name="parking_week">Radni dan:</string>
+    <string name="parking_weekend">Vikend:</string>
+    <string name="opened">Otvoren</string>
+    <string name="from_to">Od - Do</string>
+    <string name="pay_way">Mogućnost plaćanja</string>
+    <string name="pay">Gotovina, platne kartice..</string>
+    <string name="info">Dodatne informacije</string>
+    <string name="reservation">Rezerviši mesto</string>
+
+    <string name="dropOffDate">Datum rezervacije:</string>
+    <string name="dropOffTime">Vreme rezervacije:</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

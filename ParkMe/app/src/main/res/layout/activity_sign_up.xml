@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_sign_up"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.parkingApp.parkme.SignUpActivity">
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_name"
+        android:textStyle="bold">
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editTextSurname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextName"
+        android:hint="@string/prompt_surname"
+        android:textStyle="bold">
+    </EditText>
+
+    <EditText
+        android:id="@+id/editTextUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextSurname"
+        android:hint="@string/prompt_username"
+        android:textStyle="bold">
+    </EditText>
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextUserName"
+        android:inputType="textEmailAddress"
+        android:hint="@string/prompt_email"
+        android:textStyle="bold">
+    </EditText>
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/editTextEmail"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_password"
+        android:inputType="textVisiblePassword"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/editTextConfirmPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextPassword"
+        android:hint="@string/confirm_password"
+        android:inputType="textVisiblePassword"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:id="@+id/editTextRegistrationNum"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextConfirmPassword"
+        android:hint="@string/registration_number"
+        android:inputType="text"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/buttonCreateAccount"
+        style="?android:textAppearanceSmall"
+        android:layout_width="200dp"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextRegistrationNum"
+        android:layout_marginTop="16dp"
+        android:text="@string/create_account"
+        android:background="@color/appName"
+        android:layout_marginBottom="60dp" />
+
+
+</RelativeLayout>
