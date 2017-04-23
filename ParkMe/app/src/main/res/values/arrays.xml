@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="payment_array">
+        <item>Izaberite način plaćanja</item>
+        <item>Gotovina</item>
+        <item>Kreditna kartica</item>
+        <item>Kuponi</item>
+    </string-array>
+</resources>

@@ -40,8 +40,8 @@
     <string name="info">Dodatne informacije</string>
     <string name="reservation">Rezerviši mesto</string>
 
-    <string name="dropOffDate">Datum rezervacije:</string>
-    <string name="dropOffTime">Vreme rezervacije:</string>
+    <string name="dropOffDate">Početak rezervacije</string>
+    <string name="dropOffTime">Kraj rezervacije</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

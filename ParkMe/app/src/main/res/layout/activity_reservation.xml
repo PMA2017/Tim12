@@ -10,28 +10,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.parkingApp.parkme.ReservationActivity">
 
-    <TextView
-        android:id="@+id/dropOffDate"
-        android:layout_height="20dp"
-        android:layout_width="200dp"
-        android:text="@string/dropOffDate"
-        android:layout_alignParentStart="true"
-        android:textColor="@color/black"/>
-
-    <TextView
-        android:id="@+id/dropOffTime"
-        android:layout_height="20dp"
-        android:layout_width="match_parent"
-        android:text="@string/dropOffTime"
-        android:layout_toEndOf="@id/dropOffDate"
-        android:textColor="@color/black"/>
-
     <EditText
         android:id="@+id/dateDrop"
-        android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAlignment="center"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/dropOffDate" />
+        android:text="@string/dropOffDate" />
+
+    <EditText
+        android:id="@+id/dateEnd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:text="@string/dropOffTime"
+        android:layout_below="@+id/dateDrop"/>
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/dateEnd"/>
+
+    <Button
+        android:id="@+id/confirmReservation"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/spinner1"
+        android:background="@color/appName"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
+        android:text="Potvrdi rezervaciju"/>
 
 
 </RelativeLayout>

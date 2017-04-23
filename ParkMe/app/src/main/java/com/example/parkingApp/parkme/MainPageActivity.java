@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainPageActivity extends AppCompatActivity {
 
@@ -28,5 +29,9 @@ public class MainPageActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        if(this.getIntent().getExtras() != null){
+            Toast.makeText(this, this.getIntent().getExtras().getString("value"),Toast.LENGTH_LONG).show();
+        }
     }
 }
