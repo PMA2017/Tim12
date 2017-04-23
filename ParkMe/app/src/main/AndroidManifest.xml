@@ -37,7 +37,8 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainPageActivity" />
         <activity android:name=".ParkingDetailsActivity" />
-        <activity android:name=".ReservationActivity"></activity>
+        <activity android:name=".ReservationActivity" />
+        <activity android:name=".AdminAddParkingActivity"></activity>
     </application>
 
 </manifest>

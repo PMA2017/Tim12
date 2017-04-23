@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.parkingApp.parkme.AdminAddParkingActivity">
+
+    <EditText
+        android:id="@+id/addName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Naziv parkinga" />
+
+    <EditText
+        android:id="@+id/addAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addName"
+        android:layout_marginTop="20dp"
+        android:hint="Adresa parkinga" />
+
+    <EditText
+        android:id="@+id/addPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addAddress"
+        android:layout_marginTop="20dp"
+        android:hint="Cena po satu" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addPrice"
+
+        android:layout_marginTop="20dp"
+        android:text="Radno vreme:"
+        android:textSize="18dp" />
+
+    <EditText
+        android:id="@+id/workingHours"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/time"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:hint="Od"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/workingHoursTo"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/time"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
+        android:hint="Do"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/workingHours"
+        android:layout_marginTop="20dp"
+        android:text="Način plaćanja:"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/cash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/payment"
+        android:layout_marginTop="10dp"
+        android:text="Gotovina"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cash"
+        android:layout_marginTop="10dp"
+        android:text="Platne kartice"
+        android:textSize="18dp" />
+
+    <CheckBox
+        android:id="@+id/kupon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card"
+        android:layout_marginTop="10dp"
+        android:text="Kuponi"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/addParking"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/kupon"
+        android:layout_centerInParent="true"
+        android:background="@color/appName"
+        android:text="Dodaj parking" />
+
+
+</RelativeLayout>
