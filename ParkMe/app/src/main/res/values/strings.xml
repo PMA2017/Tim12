@@ -37,11 +37,19 @@
     <string name="from_to">Od - Do</string>
     <string name="pay_way">Mogućnost plaćanja</string>
     <string name="pay">Gotovina, platne kartice..</string>
+    <string name="cash">Gotovina</string>
+    <string name="cards">Platne kartice..</string>
+    <string name="coupons">Kuponi</string>
     <string name="info">Dodatne informacije</string>
     <string name="reservation">Rezerviši mesto</string>
+    <string name="price_per_hour">Cena po satu</string>
+    <string name="working_time">Radno vreme</string>
+    <string name="add_parking">Dodaj parking</string>
 
     <string name="dropOffDate">Početak rezervacije</string>
     <string name="dropOffTime">Kraj rezervacije</string>
+    <string name="confirm_reservation">Potvrdi rezervaciju</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->

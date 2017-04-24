@@ -15,16 +15,18 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textAlignment="center"
+        android:inputType="datetime"
         android:layout_marginTop="10dp"
-        android:text="@string/dropOffDate" />
+        android:hint="@string/dropOffDate" />
 
     <EditText
         android:id="@+id/dateEnd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textAlignment="center"
+        android:inputType="datetime"
         android:layout_marginTop="30dp"
-        android:text="@string/dropOffTime"
+        android:hint="@string/dropOffTime"
         android:layout_below="@+id/dateDrop"/>
 
     <Spinner
@@ -45,7 +47,7 @@
         android:textStyle="bold"
         android:layout_marginTop="30dp"
         android:layout_centerInParent="true"
-        android:text="Potvrdi rezervaciju"/>
+        android:text="@string/confirm_reservation"/>
 
 
 </RelativeLayout>

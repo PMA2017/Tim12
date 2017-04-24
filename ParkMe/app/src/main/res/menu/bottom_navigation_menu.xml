@@ -17,6 +17,6 @@
         android:id="@+id/action_music"
         android:enabled="true"
         android:icon="@drawable/ic_action_duration"
-        android:title="@string/duration_action"
+        android:title="Dodaj novi parking"
         app:showAsAction="ifRoom" />
 </menu>

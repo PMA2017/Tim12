@@ -11,10 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TimePicker;
 
 import com.android.datetimepicker.date.DatePickerDialog;
 import com.android.datetimepicker.time.RadialPickerLayout;
@@ -51,8 +49,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                         android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
-        staticAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Apply the adapter to the spinner
         dropdown.setAdapter(staticAdapter);
@@ -96,7 +93,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         confirmRes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle(); bundle.putString("value", "Uspesno ste rezervisali parking mesto!");
+                Bundle bundle = new Bundle();
+                bundle.putString("value", "Uspesno ste rezervisali parking mesto!");
                 startActivity(new Intent(getApplicationContext(), MainPageActivity.class).putExtras(bundle));
                 finish();
             }
