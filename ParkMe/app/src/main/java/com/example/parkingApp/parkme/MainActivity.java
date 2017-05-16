@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView reg = (TextView) findViewById(R.id.link_signup);
         Button login = (Button) findViewById(R.id.sign_in_button);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

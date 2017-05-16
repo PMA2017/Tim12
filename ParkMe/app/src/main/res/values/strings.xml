@@ -50,6 +50,46 @@
     <string name="dropOffTime">Kraj rezervacije</string>
     <string name="confirm_reservation">Potvrdi rezervaciju</string>
 
+    <string name="home">Home</string>
+    <string name="places">Mesta</string>
+    <string name="preferences">Podešavanja</string>
+    <string name="about">O aplikaciji</string>
+    <string name="sync_data">Sinhronizacija</string>
+
+
+    <string name="home_long">Mapa</string>
+    <string name="groups_long">Grupe</string>
+    <string name="places_long">Places to review</string>
+    <string name="preferences_long">Promenite podešavanja</string>
+    <string name="about_long">Saznajte više</string>
+    <string name="sync_data_long">Sinhronizacija podataka sa servera</string>
+
+    <string name="pref_sync_title">Dozvoli sinhronizaciju</string>
+    <string name="pref_sync_summ">Dozvoli aplikaciji da sinhronizuje automatski, kada je wifi dostupan</string>
+    <string name="pref_syncConnectionType">Interval sinhronizacije</string>
+    <string name="pref_radiusConnectionType">Radius lookup</string>
+
+    <string name="pref_sync_list">pref_sync_list</string>
+    <string name="pref_radius">pref_radius</string>
+    <string name="pref_sync">pref_sync</string>
+
+    <string name="notifications">Obaveštenja</string>
+    <string name="notif_on_my_review">On my reviews</string>
+    <string name="notif_on_my_comment">On my comments</string>
+    <string name="notif_on_my_review_key">notif_on_my_review</string>
+    <string name="notif_on_my_comment_key">notif_on_my_comment</string>
+    <string name="notif_on_my_review_summ">Send you notifications on reviews that you have created after sync</string>
+    <string name="notif_on_my_comment_summ">Send you notifications on reviews that you have ccommented after sync</string>
+
+    <string name="notif_on_sync_key">notif_on_sync</string>
+    <string name="notif_on_sync_summ">Send you notifications about sync</string>
+    <string name="notif_on_sync_title">Sync notifications</string>
+
+    <string name="turn_wifi_on">Turn wifi on</string>
+    <string name="turn_notif_on">Stop notification</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
