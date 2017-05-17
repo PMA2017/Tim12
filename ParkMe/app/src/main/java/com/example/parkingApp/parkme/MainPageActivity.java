@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.parkingApp.parkme.adapters.DrawerListAdapter;
 import com.example.parkingApp.parkme.model.NavItem;
+import com.example.parkingApp.parkme.model.User;
 
 import java.util.ArrayList;
 
@@ -59,6 +60,11 @@ public class MainPageActivity extends AppCompatActivity {
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
 
         prepareMenu(mNavItems);
+
+        User user = new User("smor", "smor");
+        user.save();
+
+        Log.d("", user.userName);
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);

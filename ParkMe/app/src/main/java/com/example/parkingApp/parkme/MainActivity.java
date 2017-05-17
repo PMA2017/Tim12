@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
+import com.facebook.stetho.Stetho;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
         TextView reg = (TextView) findViewById(R.id.link_signup);
         Button login = (Button) findViewById(R.id.sign_in_button);
+
+        Stetho.initializeWithDefaults(this);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
