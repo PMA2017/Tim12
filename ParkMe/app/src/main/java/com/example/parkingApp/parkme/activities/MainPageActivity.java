@@ -1,4 +1,4 @@
-package com.example.parkingApp.parkme;
+package com.example.parkingApp.parkme.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -15,8 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,11 +22,20 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.parkingApp.parkme.fragments.MapFragment;
+import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.adapters.DrawerListAdapter;
 import com.example.parkingApp.parkme.model.NavItem;
 import com.example.parkingApp.parkme.model.User;
+import com.example.parkingApp.parkme.servicecall.ApiUtils;
+import com.example.parkingApp.parkme.servicecall.ParkingService;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainPageActivity extends AppCompatActivity {
 
@@ -50,6 +56,8 @@ public class MainPageActivity extends AppCompatActivity {
     private boolean allowCommentedNotif;
     private SharedPreferences sharedPreferences;
 
+    private ParkingService mAPIService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,10 +69,15 @@ public class MainPageActivity extends AppCompatActivity {
 
         prepareMenu(mNavItems);
 
-        User user = new User("smor", "smor");
+       /* User user = new User("smor", "smor");
         user.save();
 
-        Log.d("", user.userName);
+        Log.d("", user.userName);*/
+
+
+
+        mAPIService = ApiUtils.getAPIService();
+
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -116,7 +129,7 @@ public class MainPageActivity extends AppCompatActivity {
         //ft.addToBackStack(MapFragment.TAG);
         ft.commit();
 
-        //Button sl = (Button) findViewById(R.id.sledeca);
+        Button sl = (Button) findViewById(R.id.sledeca);
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
@@ -140,13 +153,36 @@ public class MainPageActivity extends AppCompatActivity {
             }
         });
 
-        /*sl.setOnClickListener(new View.OnClickListener() {
+        sl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ParkingDetailsActivity.class);
-                startActivity(i);
+                //Intent i = new Intent(getApplicationContext(), ParkingDetailsActivity.class);
+                //startActivity(i);
+                mAPIService.listUsers().enqueue(new Callback<List<User>>() {
+
+                    List<User> users = new ArrayList<User>();
+
+                    @Override
+                    public void onResponse(Call<List<User>> call, @NonNull Response<List<User>> response) {
+                        if (response.isSuccessful())  {
+                            //users = response.body();
+                            Toast.makeText(MainPageActivity.this,response.body().toString(),Toast.LENGTH_LONG).show();
+                            //Log.e("nesto", "post submitted to API." + response.body().toString());
+                        }
+                        else{
+                            //show error
+                            Toast.makeText(MainPageActivity.this,"error",Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<User>> call, Throwable t) {
+                        Toast.makeText(MainPageActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                });
             }
-        });*/
+        });
 
         if(this.getIntent().getExtras() != null){
             Toast.makeText(this, this.getIntent().getExtras().getString("value"),Toast.LENGTH_LONG).show();

@@ -1,10 +1,13 @@
-package com.example.parkingApp.parkme;
+package com.example.parkingApp.parkme.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.parkingApp.parkme.R;
+import com.example.parkingApp.parkme.activities.MainPageActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 

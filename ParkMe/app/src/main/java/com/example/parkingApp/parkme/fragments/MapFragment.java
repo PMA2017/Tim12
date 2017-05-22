@@ -1,4 +1,4 @@
-package com.example.parkingApp.parkme;
+package com.example.parkingApp.parkme.fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.parkingApp.parkme.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;

@@ -1,4 +1,4 @@
-package com.example.parkingApp.parkme;
+package com.example.parkingApp.parkme.activities;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,8 +17,7 @@ import android.widget.Spinner;
 import com.android.datetimepicker.date.DatePickerDialog;
 import com.android.datetimepicker.time.RadialPickerLayout;
 import com.android.datetimepicker.time.TimePickerDialog;
-
-import java.util.Locale;
+import com.example.parkingApp.parkme.R;
 
 public class ReservationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 

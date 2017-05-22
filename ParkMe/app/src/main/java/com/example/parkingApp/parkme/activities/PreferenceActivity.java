@@ -1,9 +1,11 @@
-package com.example.parkingApp.parkme;
+package com.example.parkingApp.parkme.activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+
+import com.example.parkingApp.parkme.R;
 
 public class PreferenceActivity extends android.preference.PreferenceActivity {
 

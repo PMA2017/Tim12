@@ -1,4 +1,4 @@
-package com.example.parkingApp.parkme;
+package com.example.parkingApp.parkme.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.android.datetimepicker.time.RadialPickerLayout;
 import com.android.datetimepicker.time.TimePickerDialog;
+import com.example.parkingApp.parkme.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

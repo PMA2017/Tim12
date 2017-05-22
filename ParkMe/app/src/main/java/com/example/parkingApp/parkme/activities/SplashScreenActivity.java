@@ -1,4 +1,4 @@
-package com.example.parkingApp.parkme;
+package com.example.parkingApp.parkme.activities;
 
 import android.accounts.AccountManager;
 import android.content.Intent;
@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Toast;
+
+import com.example.parkingApp.parkme.MainActivity;
+import com.example.parkingApp.parkme.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
