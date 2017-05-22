@@ -1,0 +1,7 @@
+/ParkingBack/tmp/*
+/ParkingBack/.settings/*
+/ParkingBack/modules/*
+/ParkingBack/eclipse/*
+/ParkingBack/.project
+/ParkingBack/.classpath
+/ParkingBack/db/*

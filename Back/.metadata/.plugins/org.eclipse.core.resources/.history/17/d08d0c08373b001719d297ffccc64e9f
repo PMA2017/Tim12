@@ -1,0 +1,27 @@
+package controllers;
+
+import java.util.List;
+
+import play.mvc.Controller;
+
+public class Users extends Controller{
+	
+	public static void all(){
+		try{
+			List<models.User> users = models.User.findAll();
+			renderJSON(users);
+		}catch(Exception e){
+			error("Unable to read entities!");
+		}
+	}
+	
+	public static void get(long id){
+		try{
+			models.User user = models.User.findById(id);
+			renderJSON(user);
+		}catch(Exception e){
+			error("Unable to read entity!");
+		}
+	}
+
+}
