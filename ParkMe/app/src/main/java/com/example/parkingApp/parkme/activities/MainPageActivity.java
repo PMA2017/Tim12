@@ -26,6 +26,8 @@ import com.example.parkingApp.parkme.fragments.MapFragment;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.adapters.DrawerListAdapter;
 import com.example.parkingApp.parkme.model.NavItem;
+import com.example.parkingApp.parkme.model.Parking;
+import com.example.parkingApp.parkme.model.Reservation;
 import com.example.parkingApp.parkme.model.User;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
@@ -68,13 +70,6 @@ public class MainPageActivity extends AppCompatActivity {
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
 
         prepareMenu(mNavItems);
-
-       /* User user = new User("smor", "smor");
-        user.save();
-
-        Log.d("", user.userName);*/
-
-
 
         mAPIService = ApiUtils.getAPIService();
 
