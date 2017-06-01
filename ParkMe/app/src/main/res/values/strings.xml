@@ -74,16 +74,16 @@
     <string name="pref_sync">pref_sync</string>
 
     <string name="notifications">Obaveštenja</string>
-    <string name="notif_on_my_review">On my reviews</string>
+    <string name="notif_on_my_review">Parking</string>
     <string name="notif_on_my_comment">On my comments</string>
     <string name="notif_on_my_review_key">notif_on_my_review</string>
     <string name="notif_on_my_comment_key">notif_on_my_comment</string>
-    <string name="notif_on_my_review_summ">Send you notifications on reviews that you have created after sync</string>
+    <string name="notif_on_my_review_summ">Slanje obaveštenja o isteku parking mesta</string>
     <string name="notif_on_my_comment_summ">Send you notifications on reviews that you have ccommented after sync</string>
 
     <string name="notif_on_sync_key">notif_on_sync</string>
-    <string name="notif_on_sync_summ">Send you notifications about sync</string>
-    <string name="notif_on_sync_title">Sync notifications</string>
+    <string name="notif_on_sync_summ">Slanje obaveštenja o sinhronizaciji</string>
+    <string name="notif_on_sync_title">Sync obaveštenja</string>
 
     <string name="turn_wifi_on">Turn wifi on</string>
     <string name="turn_notif_on">Stop notification</string>

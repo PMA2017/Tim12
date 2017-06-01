@@ -1,5 +1,7 @@
 package com.example.parkingApp.parkme.activities;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -18,8 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.parkingApp.parkme.fragments.MapFragment;
@@ -31,6 +35,14 @@ import com.example.parkingApp.parkme.model.Reservation;
 import com.example.parkingApp.parkme.model.User;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +69,13 @@ public class MainPageActivity extends AppCompatActivity {
     private boolean allowReviewNotif;
     private boolean allowCommentedNotif;
     private SharedPreferences sharedPreferences;
+    String pref_userName;
 
     private ParkingService mAPIService;
+
+    TextView username, user_email;
+    ImageView user_picture;
+    JSONObject response, profile_pic_data, profile_pic_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +141,21 @@ public class MainPageActivity extends AppCompatActivity {
         //ft.addToBackStack(MapFragment.TAG);
         ft.commit();
 
-        Button sl = (Button) findViewById(R.id.sledeca);
+        username = (TextView) findViewById(R.id.userName);
+
+        if (sharedPreferences != null) {
+            sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            pref_userName = sharedPreferences.getString("username", "");
+            username.setText(pref_userName);
+        }
+
+        user_picture = (ImageView) findViewById(R.id.avatar);
+
+
+        Intent intent = getIntent();
+        String jsondata = intent.getStringExtra("jsondata");
+        setUserProfile(jsondata);
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
@@ -148,42 +179,25 @@ public class MainPageActivity extends AppCompatActivity {
             }
         });
 
-        sl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent i = new Intent(getApplicationContext(), ParkingDetailsActivity.class);
-                //startActivity(i);
-                mAPIService.listUsers().enqueue(new Callback<List<User>>() {
-
-                    List<User> users = new ArrayList<User>();
-
-                    @Override
-                    public void onResponse(Call<List<User>> call, @NonNull Response<List<User>> response) {
-                        if (response.isSuccessful())  {
-                            //users = response.body();
-                            Toast.makeText(MainPageActivity.this,response.body().toString(),Toast.LENGTH_LONG).show();
-                            //Log.e("nesto", "post submitted to API." + response.body().toString());
-                        }
-                        else{
-                            //show error
-                            Toast.makeText(MainPageActivity.this,"error",Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<User>> call, Throwable t) {
-                        Toast.makeText(MainPageActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
 
         if(this.getIntent().getExtras() != null){
             Toast.makeText(this, this.getIntent().getExtras().getString("value"),Toast.LENGTH_LONG).show();
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    public void setUserProfile(String jsondata) {
+        try {
+            response = new JSONObject(jsondata);
+            username.setText(response.get("name").toString());
+            profile_pic_data = new JSONObject(response.get("picture").toString());
+            profile_pic_url = new JSONObject(profile_pic_data.getString("data"));
+            Picasso.with(this).load(profile_pic_url.getString("url"))
+                    .into(user_picture);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void prepareMenu(ArrayList<NavItem> mNavItems ){
@@ -248,6 +262,23 @@ public class MainPageActivity extends AppCompatActivity {
             setTitle(mNavItems.get(position).getmTitle());
         }
         mDrawerLayout.closeDrawer(mDrawerPane);
+    }
+
+    public void disconnectFromFacebook() {
+
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                LoginManager.getInstance().logOut();
+
+            }
+        }).executeAsync();
     }
 
     @Override

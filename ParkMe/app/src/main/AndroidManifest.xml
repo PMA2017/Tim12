@@ -45,6 +45,10 @@
                 android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activities.ParkingDetailsActivity" />
         <activity android:name=".activities.ReservationActivity" />
+        <activity android:name="com.facebook.FacebookActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
         <activity android:name=".activities.AdminAddParkingActivity"></activity>
     </application>
 

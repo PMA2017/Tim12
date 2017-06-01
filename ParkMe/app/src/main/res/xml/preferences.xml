@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory
-        android:title="Auto data sync"
+        android:title="Automatska sinhronizacija podataka"
         android:key="sync_settings">
 
         <CheckBoxPreference
@@ -48,11 +48,11 @@
             android:summary="@string/notif_on_my_review_summ"
             android:title="@string/notif_on_my_review" />
 
-        <CheckBoxPreference
+        <!--<CheckBoxPreference
             android:defaultValue="false"
             android:key="@string/notif_on_my_comment_key"
             android:summary="@string/notif_on_my_comment_summ"
-            android:title="@string/notif_on_my_comment" />
+            android:title="@string/notif_on_my_comment" /> -->
 
         <CheckBoxPreference
             android:defaultValue="false"
