@@ -1,5 +1,6 @@
 package com.example.parkingApp.parkme.servicecall;
 
+import com.example.parkingApp.parkme.model.Parking;
 import com.example.parkingApp.parkme.model.User;
 
 import java.util.List;
@@ -20,4 +21,7 @@ public interface ParkingService {
 
     @GET("users/get/username/{username}")
     Call<User> getUser(@Path("username") String username);
+
+    @GET("parkings/all")
+    Call<List<Parking>> getParkings();
 }

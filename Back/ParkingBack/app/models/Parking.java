@@ -25,16 +25,20 @@ public class Parking extends Model{
 	@Column
 	public String workTime;
 	@Column
-	public PaymentWay paymentWay;
+	public String paymentWay;
 	@Column
 	public String informations;
 	@Column
 	public String image;
+	@Column
+	public double latitude;
+	@Column
+	public double longitude;
 	
 	
 	public Parking(String parkingName, String adress, int totalNumberOfSpaces, int numberOfFreeSpaces,
-			double workingDayPrice, double weekendPrice, String workTime, PaymentWay paymentWay, String informations,
-			String image) {
+			double workingDayPrice, double weekendPrice, String workTime, String paymentWay, String informations,
+			String image, double latitude, double longitude) {
 		super();
 		this.parkingName = parkingName;
 		this.adress = adress;
@@ -46,12 +50,9 @@ public class Parking extends Model{
 		this.paymentWay = paymentWay;
 		this.informations = informations;
 		this.image = image;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
-	
-	public enum PaymentWay {
-		Keš, Kartica, Vaučer
-	}
-	
 	
 
 }

@@ -12,9 +12,14 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.parkingApp.parkme.MainActivity;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.activities.ParkingDetailsActivity;
+import com.example.parkingApp.parkme.model.Parking;
+import com.example.parkingApp.parkme.servicecall.ApiUtils;
+import com.example.parkingApp.parkme.servicecall.ParkingService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -25,12 +30,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MapFragment extends Fragment {
 
     MapView mMapView;
     private GoogleMap googleMap;
     private Marker myMarker;
 
+    private ParkingService mAPIService;
 
     public MapFragment() {
 
@@ -45,6 +57,7 @@ public class MapFragment extends Fragment {
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
+        mAPIService = ApiUtils.getAPIService();
 
         mMapView.onResume(); // needed to get the map to display immediately
 
@@ -66,9 +79,30 @@ public class MapFragment extends Fragment {
                     googleMap.setMyLocationEnabled(true);
                 }
 
+                mAPIService.getParkings().enqueue(new Callback<List<Parking>>() {
+                    @Override
+                    public void onResponse(Call<List<Parking>> call, Response<List<Parking>> response) {
+                        if(response.body() != null) {
+                            List<Parking> parkings = (List<Parking>)response.body();
+                            for(int i=0; i<parkings.size(); i++){
+                                double latitude = Double.parseDouble(parkings.get(i).latitude);
+                                double longitude = Double.parseDouble(parkings.get(i).longitude);
+
+                                LatLng parking = new LatLng(latitude, longitude);
+                                myMarker = googleMap.addMarker(new MarkerOptions().position(parking).title(parkings.get(i).parkingName).snippet("Parking"));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Parking>> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Milana", Toast.LENGTH_LONG).show();
+                    }
+                });
+
                 // For dropping a marker at a point on the Map
                 LatLng NoviSad = new LatLng(45.2622, 19.8519);
-                myMarker = googleMap.addMarker(new MarkerOptions().position(NoviSad).title("Parking1").snippet("Parking"));
+                //myMarker = googleMap.addMarker(new MarkerOptions().position(NoviSad).title("Parking1").snippet("Parking"));
 
 
                 // For zooming automatically to the location of the marker

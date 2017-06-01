@@ -40,7 +40,7 @@ public class Parking {
 
     @SerializedName("paymentWay")
     @Expose
-    public PaymentWay paymentWay;
+    public String paymentWay;
 
     @SerializedName("informations")
     @Expose
@@ -50,15 +50,20 @@ public class Parking {
     @Expose
     public String image;
 
-    public enum PaymentWay {
-        Keš, Kartica, Vaučer
-    }
+    @SerializedName("latitude")
+    @Expose
+    public String latitude;
+
+    @SerializedName("longitude")
+    @Expose
+    public String longitude;
+
 
     public Parking() {
 
     }
 
-    public Parking(String parkingName, String adress, int totalNumberOfSpaces, int numberOfFreeSpaces, double workingDayPrice, double weekendPrice, String workTime, PaymentWay paymentWay, String informations, String image) {
+    public Parking(String parkingName, String adress, int totalNumberOfSpaces, int numberOfFreeSpaces, double workingDayPrice, double weekendPrice, String workTime, String paymentWay, String informations, String image, String latitude, String longitude) {
         this.parkingName = parkingName;
         this.adress = adress;
         this.totalNumberOfSpaces = totalNumberOfSpaces;
@@ -69,6 +74,8 @@ public class Parking {
         this.paymentWay = paymentWay;
         this.informations = informations;
         this.image = image;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getParkingName() {
@@ -127,11 +134,11 @@ public class Parking {
         this.workTime = workTime;
     }
 
-    public PaymentWay getPaymentWay() {
+    public String getPaymentWay() {
         return paymentWay;
     }
 
-    public void setPaymentWay(PaymentWay paymentWay) {
+    public void setPaymentWay(String paymentWay) {
         this.paymentWay = paymentWay;
     }
 
@@ -151,6 +158,22 @@ public class Parking {
         this.image = image;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public String toString() {
         return "Parking{" +
@@ -161,9 +184,11 @@ public class Parking {
                 ", workingDayPrice=" + workingDayPrice +
                 ", weekendPrice=" + weekendPrice +
                 ", workTime='" + workTime + '\'' +
-                ", paymentWay=" + paymentWay +
+                ", paymentWay='" + paymentWay + '\'' +
                 ", informations='" + informations + '\'' +
                 ", image='" + image + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
                 '}';
     }
 }
