@@ -26,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.parkingApp.parkme.MainActivity;
 import com.example.parkingApp.parkme.fragments.MapFragment;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.adapters.DrawerListAdapter;
@@ -206,6 +207,7 @@ public class MainPageActivity extends AppCompatActivity {
         mNavItems.add(new NavItem(getString(R.string.preferences), getString(R.string.preferences_long), R.drawable.ic_action_settings));
         mNavItems.add(new NavItem(getString(R.string.about), getString(R.string.about_long), R.drawable.ic_action_about));
         mNavItems.add(new NavItem(getString(R.string.sync_data), getString(R.string.sync_data_long), R.drawable.ic_action_refresh));
+        mNavItems.add(new NavItem("Odjava", "Izlogujte se iz aplikacije", R.drawable.ic_action_logout));
     }
 
     private void consultPreferences(){
@@ -249,7 +251,8 @@ public class MainPageActivity extends AppCompatActivity {
         }else if(position == 3){
             //..
         }else if(position == 4){
-            //..
+            logout();
+            disconnectFromFacebook();
         }else if(position == 5){
             //...
         }else{
@@ -262,6 +265,14 @@ public class MainPageActivity extends AppCompatActivity {
             setTitle(mNavItems.get(position).getmTitle());
         }
         mDrawerLayout.closeDrawer(mDrawerPane);
+    }
+
+    private void logout() {
+        Intent log = new Intent(this, MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(log);
+        finish();
     }
 
     public void disconnectFromFacebook() {
@@ -293,5 +304,11 @@ public class MainPageActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // disable going back to the MainActivity
+        moveTaskToBack(true);
     }
 }
