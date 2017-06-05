@@ -1,0 +1,60 @@
+models.Parking(parking1):
+   parkingName: Centar
+   adress: Jevrejska 10
+   totalNumberOfSpaces: 50
+   numberOfFreeSpaces: 17
+   workingDayPrice: 100
+   weekendPrice: 50
+   workTime: 09:00-22:00
+   paymentWay: kes,kartica
+   informations: info
+   image: lala
+   latitude: 45.253728
+   longitude: 19.841242
+   
+models.Parking(parking2):
+   parkingName: Liman
+   adress: Bulevar cara Lazara 45
+   totalNumberOfSpaces: 100
+   numberOfFreeSpaces: 60
+   workingDayPrice: 200
+   weekendPrice: 100
+   workTime: 08:00-19:00
+   paymentWay: kes
+   informations: dobar parking
+   image: lala
+   latitude: 45.242579
+   longitude: 19.836829
+   
+models.Parking(parking3):
+   parkingName: Grbavica
+   adress: Gogoljeva 17
+   totalNumberOfSpaces: 40
+   numberOfFreeSpaces: 12
+   workingDayPrice: 50
+   weekendPrice: 30
+   workTime: 08:00-23:00
+   paymentWay: kes,kartica,vauceri
+   informations: Blizu centra
+   image: lala
+   latitude: 45.246357
+   longitude: 19.834294
+   
+models.User(user1):
+   name: Dragan
+   surname: Vidakovic
+   username: gagi
+   password: wockica
+   email: gagi@gmail.com
+   isAdmin: false
+   registrationNumber: 074M168
+   
+models.User(user2):
+   name: Jana
+   surname: Vojnovic
+   username: xijana
+   password: rospija
+   email: xi@gmail.com
+   isAdmin: false
+   registrationNumber: NS231LS
+   

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -111,12 +112,20 @@ public class MapFragment extends Fragment {
 
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
-                    public boolean onMarkerClick(Marker marker) {if(marker.equals(myMarker)){
-                        Intent in = new Intent(getActivity(), ParkingDetailsActivity.class);
-                        startActivity(in);
-                    }
-                        return false;
-                    }
+                    public boolean onMarkerClick(Marker marker) {
+//                        if(marker.equals(myMarker)){
+                            SharedPreferences pref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = pref.edit();
+                            edit.putString("parkingTitle", marker.getTitle());
+                            edit.commit();
+
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString("parkingTitle", marker.getTitle());
+                            Intent in = new Intent(getActivity(), ParkingDetailsActivity.class);
+                            startActivity(in);
+//                        }
+                            return false;
+                        }
                 });
             }
         });

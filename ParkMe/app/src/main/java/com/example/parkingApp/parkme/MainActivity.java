@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 login();
-                Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -154,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
                                         SharedPreferences.Editor edit = pref.edit();
                                         edit.putString("username", username);
                                         edit.commit();
+                                        String df = "smor";
 
                                     }
                                 }, 1000);

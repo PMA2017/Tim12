@@ -8,6 +8,7 @@ GET     /                                       Application.index
 # User
 GET		/users/all										Users.all
 GET		/users/get/{id}									Users.get
+GET     /users/get/username/{username}                  Users.getByUsername
 POST	/users/update									Users.update
 PUT		/users/create									Users.create
 DELETE	/users/delete/{id}								Users.delete
@@ -15,6 +16,7 @@ DELETE	/users/delete/{id}								Users.delete
 # Parking
 GET		/parkings/all									Parkings.all
 GET		/parkings/get/{id}								Parkings.get
+GET     /parkings/get/title/{title}                     Parkings.getByTitle
 POST	/parkings/update								Parkings.update
 PUT		/parkings/create								Parkings.create
 DELETE	/parkings/delete/{id}							Parkings.delete

@@ -24,4 +24,7 @@ public interface ParkingService {
 
     @GET("parkings/all")
     Call<List<Parking>> getParkings();
+
+    @GET("parkings/get/title/{title}")
+    Call<Parking> getParking(@Path("title") String title);
 }

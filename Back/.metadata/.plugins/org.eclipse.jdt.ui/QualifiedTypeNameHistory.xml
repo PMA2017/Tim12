@@ -5,4 +5,5 @@
 <fullyQualifiedTypeName name="play.mvc.Controller"/>
 <fullyQualifiedTypeName name="models.Parking"/>
 <fullyQualifiedTypeName name="models.Parking.PaymentWay"/>
+<fullyQualifiedTypeName name="models.User"/>
 </qualifiedTypeNameHistroy>
