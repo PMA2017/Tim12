@@ -28,6 +28,16 @@ public class Parkings extends Controller{
 		}
 	}
 	
+	public static void getByTitle(String title){
+		try{
+			List<models.Parking> parkings = models.Parking.find("byParkingname", title).fetch();
+			models.Parking parking = parkings.get(0);
+			renderJSON(parking);
+		}catch(Exception e){
+			error("Unable to read entity!");
+		}
+	}
+	
 	public static void update(){
 		try{
 			String jsonAsString = params.get("body");

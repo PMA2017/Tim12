@@ -29,7 +29,7 @@
 
     <string name="parking_name">Naziv</string>
     <string name="parking_address">Adresa</string>
-    <string name="parking_full">Procenat popunjenosti</string>
+    <string name="parking_full">Popunjenost parkinga</string>
     <string name="prices">Cene</string>
     <string name="parking_week">Radni dan:</string>
     <string name="parking_weekend">Vikend:</string>

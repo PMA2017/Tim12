@@ -28,6 +28,19 @@ public class Users extends Controller{
 		}
 	}
 	
+	public static void getByUsername(String username){
+		try{
+			List<models.User> users = models.User.find("byUsername", username).fetch();
+			models.User user = users.get(0);
+//			for(int i = 0; i <= users.size(); i++){
+//				user = users.get(i);
+//			}
+			renderJSON(user);
+		}catch(Exception e){
+			error("Unable to read entity!");
+		}
+	}
+	
 	public static void update(){
 		try{
 			String jsonAsString = params.get("body");

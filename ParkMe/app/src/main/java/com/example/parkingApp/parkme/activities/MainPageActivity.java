@@ -144,11 +144,9 @@ public class MainPageActivity extends AppCompatActivity {
 
         username = (TextView) findViewById(R.id.userName);
 
-        if (sharedPreferences != null) {
             sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             pref_userName = sharedPreferences.getString("username", "");
             username.setText(pref_userName);
-        }
 
         user_picture = (ImageView) findViewById(R.id.avatar);
 
