@@ -5,3 +5,5 @@
 /ParkingBack/.project
 /ParkingBack/.classpath
 /ParkingBack/db/*
+.metadata/*
+.recommenders/*
