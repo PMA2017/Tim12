@@ -1,6 +1,7 @@
 package com.example.parkingApp.parkme.activities;
 
 import android.app.ActivityManager;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,6 +42,8 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -142,6 +145,7 @@ public class MainPageActivity extends AppCompatActivity {
         //ft.addToBackStack(MapFragment.TAG);
         ft.commit();
 
+
         username = (TextView) findViewById(R.id.userName);
 
             sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -166,7 +170,7 @@ public class MainPageActivity extends AppCompatActivity {
 
                         break;
                     case R.id.action_schedules:
-
+//                        nMap.getNearestParking();
                         break;
                     case R.id.action_music:
                         Intent in = new Intent(getApplicationContext(), AdminAddParkingActivity.class);

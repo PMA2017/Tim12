@@ -19,7 +19,7 @@ import com.android.datetimepicker.time.RadialPickerLayout;
 import com.android.datetimepicker.time.TimePickerDialog;
 import com.example.parkingApp.parkme.R;
 
-public class ReservationActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class ReservationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
     private static final String TIME_PATTERN = "HH:mm";
     private Calendar calendar;
@@ -27,6 +27,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     private SimpleDateFormat timeFormat;
     EditText dropDate;
     EditText endDate;
+    Spinner dropdown;
     private int whichEditTextIsPressed;
 
     @Override
@@ -42,7 +43,10 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.getDefault());
 
-        Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
+        dropdown = (Spinner)findViewById(R.id.spinner1);
+
+
+
         ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
                 .createFromResource(this, R.array.payment_array,
                         android.R.layout.simple_spinner_item);
@@ -56,18 +60,16 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         dropDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerDialog.newInstance(ReservationActivity.this, calendar.get(Calendar.YEAR),
-                                calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-                        .show(getFragmentManager(), "datePicker");
+                TimePickerDialog.newInstance(ReservationActivity.this, calendar.get(Calendar.HOUR_OF_DAY),
+                        calendar.get(Calendar.MINUTE), true).show(getFragmentManager(), "timePicker");
             }
         });
 
         endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog.newInstance(ReservationActivity.this, calendar.get(Calendar.YEAR),
-                        calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-                        .show(getFragmentManager(), "datePicker");
+                TimePickerDialog.newInstance(ReservationActivity.this, calendar.get(Calendar.HOUR_OF_DAY),
+                        calendar.get(Calendar.MINUTE), true).show(getFragmentManager(), "timePicker");
             }
         });
 
@@ -100,27 +102,16 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         });
     }
 
-
-    @Override
-    public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
-        calendar.set(year, monthOfYear, dayOfMonth);
-        TimePickerDialog.newInstance(this, calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE), true).show(getFragmentManager(), "timePicker");
-    }
-
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
-        String date = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + "/" + String.valueOf(calendar.get(Calendar.MONTH)) + "/" + String.valueOf(calendar.get(Calendar.YEAR));
         String time = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":" + String.valueOf(calendar.get(Calendar.MINUTE)) + "h";
 
-        //provjera datuma
-
         if(whichEditTextIsPressed == 1)
-            dropDate.setText(date + "  " + time);
+            dropDate.setText(time);
         else if(whichEditTextIsPressed == 2)
-            endDate.setText(date + "  " + time);
+            endDate.setText(time);
 
     }
 

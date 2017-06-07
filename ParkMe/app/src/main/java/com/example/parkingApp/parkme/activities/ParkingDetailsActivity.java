@@ -71,6 +71,11 @@ public class ParkingDetailsActivity extends AppCompatActivity {
                     pay.setText(response.body().getPaymentWay());
                     info.setText(response.body().getInformations());
 
+                    SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.putString("paymentWay", response.body().getPaymentWay());
+                    edit.commit();
+
                 }
             }
 
