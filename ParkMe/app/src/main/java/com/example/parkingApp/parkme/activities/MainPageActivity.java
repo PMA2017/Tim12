@@ -142,15 +142,14 @@ public class MainPageActivity extends AppCompatActivity {
         MapFragment map = new MapFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, map);
-        //ft.addToBackStack(MapFragment.TAG);
         ft.commit();
 
 
         username = (TextView) findViewById(R.id.userName);
 
-            sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-            pref_userName = sharedPreferences.getString("username", "");
-            username.setText(pref_userName);
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        pref_userName = sharedPreferences.getString("username", "");
+        username.setText(pref_userName);
 
         user_picture = (ImageView) findViewById(R.id.avatar);
 
@@ -170,7 +169,9 @@ public class MainPageActivity extends AppCompatActivity {
 
                         break;
                     case R.id.action_schedules:
-//                        nMap.getNearestParking();
+                        android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+                        if (fragment instanceof MapFragment)
+                            ((MapFragment) fragment).getNearestParking();
                         break;
                     case R.id.action_music:
                         Intent in = new Intent(getApplicationContext(), AdminAddParkingActivity.class);
@@ -183,8 +184,8 @@ public class MainPageActivity extends AppCompatActivity {
         });
 
 
-        if(this.getIntent().getExtras() != null){
-            Toast.makeText(this, this.getIntent().getExtras().getString("value"),Toast.LENGTH_LONG).show();
+        if (this.getIntent().getExtras() != null) {
+            Toast.makeText(this, this.getIntent().getExtras().getString("value"), Toast.LENGTH_LONG).show();
         }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -203,7 +204,7 @@ public class MainPageActivity extends AppCompatActivity {
         }
     }
 
-    private void prepareMenu(ArrayList<NavItem> mNavItems ){
+    private void prepareMenu(ArrayList<NavItem> mNavItems) {
         //mNavItems.add(new NavItem(getString(R.string.home), getString(R.string.home_long), R.drawable.ic_nearest_icon));
         mNavItems.add(new NavItem(getString(R.string.places), getString(R.string.places_long), R.drawable.ic_nearest_icon));
         mNavItems.add(new NavItem(getString(R.string.preferences), getString(R.string.preferences_long), R.drawable.ic_action_settings));
@@ -212,7 +213,7 @@ public class MainPageActivity extends AppCompatActivity {
         mNavItems.add(new NavItem("Odjava", "Izlogujte se iz aplikacije", R.drawable.ic_action_logout));
     }
 
-    private void consultPreferences(){
+    private void consultPreferences() {
         synctime = sharedPreferences.getString(getString(R.string.pref_sync_list), "1");//1min
         allowSync = sharedPreferences.getBoolean(getString(R.string.pref_sync), false);
 
@@ -240,29 +241,29 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     private void selectItemFromDrawer(int position) {
-        if(position == 0){
+        if (position == 0) {
             /*FragmentTra*//*Intent preference = new Intent(MainActivity.this,ReviewerPreferenceActivity.class);
             startActivity(preference);*//*nsition.to(MyFragment.newInstance(), this, false);*/
 
-        }else if(position == 1){
+        } else if (position == 1) {
             Intent preference = new Intent(MainPageActivity.this, PreferenceActivity.class);
             startActivity(preference);
             //..
-        }else if(position == 2){
+        } else if (position == 2) {
 
-        }else if(position == 3){
+        } else if (position == 3) {
             //..
-        }else if(position == 4){
+        } else if (position == 4) {
             logout();
             disconnectFromFacebook();
-        }else if(position == 5){
+        } else if (position == 5) {
             //...
-        }else{
+        } else {
             Log.e("DRAWER", "Nesto van opsega!");
         }
 
         mDrawerList.setItemChecked(position, true);
-        if(position != 5) // za sve osim za sync
+        if (position != 5) // za sve osim za sync
         {
             setTitle(mNavItems.get(position).getmTitle());
         }

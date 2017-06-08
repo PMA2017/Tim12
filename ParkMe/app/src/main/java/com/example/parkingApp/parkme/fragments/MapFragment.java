@@ -1,18 +1,16 @@
 package com.example.parkingApp.parkme.fragments;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -20,17 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.example.parkingApp.parkme.MainActivity;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.activities.ParkingDetailsActivity;
 import com.example.parkingApp.parkme.model.Parking;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -41,6 +33,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,10 +50,7 @@ public class MapFragment extends Fragment {
     private GoogleMap googleMap;
     private Marker myMarker;
     Location mLastLocation;
-    GoogleApiClient mGoogleApiClient;
-    LocationRequest mLocationRequest;
     List<Marker> markerList;
-
     private ParkingService mAPIService;
 
     public MapFragment() {
@@ -100,9 +90,9 @@ public class MapFragment extends Fragment {
 
                 mAPIService.getParkings().enqueue(new Callback<List<Parking>>() {
                     @Override
-                    public void onResponse(Call<List<Parking>> call, Response<List<Parking>> response) {
+                    public void onResponse(@NonNull Call<List<Parking>> call, @NonNull Response<List<Parking>> response) {
                         if (response.body() != null) {
-                            List<Parking> parkings = (List<Parking>) response.body();
+                            List<Parking> parkings = response.body();
                             for (int i = 0; i < parkings.size(); i++) {
                                 double latitude = Double.parseDouble(parkings.get(i).latitude);
                                 double longitude = Double.parseDouble(parkings.get(i).longitude);
@@ -133,14 +123,14 @@ public class MapFragment extends Fragment {
                             MarkerOptions markerOptions = new MarkerOptions();
                             markerOptions.position(latLng);
                             markerOptions.title("Current Position");
-                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                             myMarker = googleMap.addMarker(markerOptions);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Parking>> call, Throwable t) {
-                        Toast.makeText(getActivity(), "Milana", Toast.LENGTH_LONG).show();
+                    public void onFailure(@NonNull Call<List<Parking>> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Backend call failed", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -160,7 +150,7 @@ public class MapFragment extends Fragment {
                         SharedPreferences pref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                         SharedPreferences.Editor edit = pref.edit();
                         edit.putString("parkingTitle", marker.getTitle());
-                        edit.commit();
+                        edit.apply();
 
 //                            Bundle bundle = new Bundle();
 //                            bundle.putString("parkingTitle", marker.getTitle());
@@ -177,17 +167,26 @@ public class MapFragment extends Fragment {
     }
 
     public void getNearestParking() {
-        /*Collections.sort(markerList, new Comparator<Marker>() {
+        Collections.sort(markerList, new Comparator<Marker>() {
             @Override
             public int compare(Marker marker2, Marker marker1) {
-                //
-                if(getDistanceBetweenPoints(marker1.get,location)>getDistanceBetweenPoints(marker2.getLocation(),location)){
+                if (getDistanceBetweenPoints(marker1.getPosition().latitude, marker1.getPosition().longitude, mLastLocation.getLatitude(), mLastLocation.getLongitude()) > getDistanceBetweenPoints(marker2.getPosition().latitude, marker2.getPosition().longitude, mLastLocation.getLatitude(), mLastLocation.getLongitude())) {
+                    //Toast.makeText(getActivity(),"wohoo",Toast.LENGTH_LONG).show();
                     return -1;
                 } else {
+                    //Toast.makeText(getActivity(),":(((((",Toast.LENGTH_LONG).show();
                     return 1;
                 }
             }
-        });*/
+        });
+        Toast.makeText(getActivity(),markerList.get(0).getTitle(),Toast.LENGTH_LONG).show();
+        PolylineOptions line=
+                new PolylineOptions().add(new LatLng(markerList.get(0).getPosition().latitude,
+                                markerList.get(0).getPosition().longitude),
+                        new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()))
+                        .width(5).color(Color.RED);
+
+        googleMap.addPolyline(line);
     }
 
     public static float getDistanceBetweenPoints(double firstLatitude, double firstLongitude, double secondLatitude, double secondLongitude) {
