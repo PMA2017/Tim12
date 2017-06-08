@@ -1,10 +1,13 @@
 package com.example.parkingApp.parkme.activities;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -13,11 +16,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import com.android.datetimepicker.date.DatePickerDialog;
+import android.widget.Toast;
 import com.android.datetimepicker.time.RadialPickerLayout;
 import com.android.datetimepicker.time.TimePickerDialog;
 import com.example.parkingApp.parkme.R;
+import com.example.parkingApp.parkme.model.Parking;
+import com.example.parkingApp.parkme.servicecall.ApiUtils;
+import com.example.parkingApp.parkme.servicecall.ParkingService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ReservationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
 
@@ -29,6 +38,11 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     EditText endDate;
     Spinner dropdown;
     private int whichEditTextIsPressed;
+    private ParkingService mAPIService;
+    private SharedPreferences sharedPreferences;
+    Bundle bundle;
+    Date timeFrom;
+    Date timeTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +58,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.getDefault());
 
         dropdown = (Spinner)findViewById(R.id.spinner1);
-
-
 
         ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
                 .createFromResource(this, R.array.payment_array,
@@ -91,13 +103,60 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             }
         });
 
+        mAPIService = ApiUtils.getAPIService();
+
         confirmRes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("value", "Uspesno ste rezervisali parking mesto!");
-                startActivity(new Intent(getApplicationContext(), MainPageActivity.class).putExtras(bundle));
-                finish();
+
+                String parkingTitle;
+                sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                parkingTitle = sharedPreferences.getString("parkingTitle", "");
+
+                String timeFromStr = dropDate.getText().toString();
+                String timeToStr = endDate.getText().toString();
+
+                if(timeFromStr.isEmpty()){
+                    Toast.makeText(ReservationActivity.this,"Morate uneti vreme rezervacije",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(timeToStr.isEmpty()){
+                    Toast.makeText(ReservationActivity.this,"Morate uneti vreme rezervacije",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+                try {
+                    timeFrom = dateFormat.parse(timeFromStr);
+                    timeTo = dateFormat.parse(timeToStr);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if(timeFrom.after(timeTo)) {
+                    Toast.makeText(ReservationActivity.this,"Vreme završetka rezervacije mora biti veće od početka.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+
+
+                mAPIService.updateCapacity(parkingTitle).enqueue(new Callback<Parking>() {
+                    @Override
+                    public void onResponse(Call<Parking> call, Response<Parking> response) {
+                        bundle = new Bundle();
+                        bundle.putString("value", "Uspesno ste rezervisali parking mesto!");
+                        startActivity(new Intent(getApplicationContext(), MainPageActivity.class).putExtras(bundle));
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Parking> call, Throwable t) {
+                        Toast.makeText(ReservationActivity.this,"KITA",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
             }
         });
     }

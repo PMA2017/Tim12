@@ -89,5 +89,19 @@ public class Parkings extends Controller{
 			error("Unable to delete entity!");
 		}
 	}
+	
+	public static void updateCapacity(){
+		try{
+			String title = params.get("body").split("\"\"")[0].split("\"")[1];
+			//String title = title1.split("\"")[1];
+			List<models.Parking> parkings = models.Parking.find("byParkingname", title).fetch();
+			models.Parking parking = parkings.get(0);
+			parking.numberOfFreeSpaces = parking.numberOfFreeSpaces - 1;
+			parking.save();
+			renderJSON(parking);
+		}catch(Exception e){
+			error("Unable to read entity!");
+		}
+	}
 
 }
