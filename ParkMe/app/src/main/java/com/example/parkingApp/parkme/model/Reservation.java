@@ -11,26 +11,66 @@ import java.util.Date;
 
 public class Reservation extends SugarRecord {
 
-    public Date date;
+    private String date;
 
-    public Time timeFrom;
+    private String timeFrom;
 
-    public Time timeTo;
+    private String timeTo;
 
-    public int numberOfHours;
+    private String user;
 
-    public double totalPrice;
+    private String parking;
 
     public Reservation() {
 
     }
 
-    public Reservation(Date date, Time timeFrom, Time timeTo, int numberOfHours, double totalPrice) {
+    public Reservation(String date, String timeFrom, String timeTo, String user, String parking) {
         this.date = date;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
-        this.numberOfHours = numberOfHours;
-        this.totalPrice = totalPrice;
+        this.user = user;
+        this.parking = parking;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setTimeFrom(String timeFrom) {
+        this.timeFrom = timeFrom;
+    }
+
+    public void setTimeTo(String timeTo) {
+        this.timeTo = timeTo;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setParking(String parking) {
+        this.parking = parking;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTimeFrom() {
+        return timeFrom;
+    }
+
+    public String getTimeTo() {
+        return timeTo;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public String getParking() {
+        return parking;
     }
 
     @Override
@@ -39,8 +79,8 @@ public class Reservation extends SugarRecord {
                 "date=" + date +
                 ", timeFrom=" + timeFrom +
                 ", timeTo=" + timeTo +
-                ", numberOfHours=" + numberOfHours +
-                ", totalPrice=" + totalPrice +
+                ", user='" + user + '\'' +
+                ", parking='" + parking + '\'' +
                 '}';
     }
 }

@@ -2,8 +2,10 @@ package com.example.parkingApp.parkme.activities;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +23,7 @@ import com.android.datetimepicker.time.RadialPickerLayout;
 import com.android.datetimepicker.time.TimePickerDialog;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.model.Parking;
+import com.example.parkingApp.parkme.model.Reservation;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
 
@@ -43,6 +46,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     Bundle bundle;
     Date timeFrom;
     Date timeTo;
+    String pref_userName;
+    ArrayList<String> payWay = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +62,37 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         dateFormat = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
         timeFormat = new SimpleDateFormat(TIME_PATTERN, Locale.getDefault());
 
+        mAPIService = ApiUtils.getAPIService();
+
         dropdown = (Spinner)findViewById(R.id.spinner1);
 
-        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
-                .createFromResource(this, R.array.payment_array,
-                        android.R.layout.simple_spinner_item);
+        final String parkingTitle;
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        parkingTitle = sharedPreferences.getString("parkingTitle", "");
 
-        // Specify the layout to use when the list of choices appears
-        staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mAPIService.getParking(parkingTitle).enqueue(new Callback<Parking>() {
+            @Override
+            public void onResponse(Call<Parking> call, Response<Parking> response) {
+                String payment = response.body().getPaymentWay();
+                String[] pw = payment.split(",");
 
-        // Apply the adapter to the spinner
-        dropdown.setAdapter(staticAdapter);
+                for(String s:pw) {
+                    payWay.add(s);
+                }
+
+                ArrayAdapter<String> staticAdapter = new ArrayAdapter<String>(ReservationActivity.this, android.R.layout.simple_spinner_item, payWay);
+                // Specify the layout to use when the list of choices appears
+                staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // Apply the adapter to the spinner
+                dropdown.setAdapter(staticAdapter);
+             }
+
+            @Override
+            public void onFailure(Call<Parking> call, Throwable t) {
+                Toast.makeText(ReservationActivity.this,"Failure",Toast.LENGTH_LONG).show();
+            }
+        });
 
         dropDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,18 +128,12 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             }
         });
 
-        mAPIService = ApiUtils.getAPIService();
-
         confirmRes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String parkingTitle;
-                sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                parkingTitle = sharedPreferences.getString("parkingTitle", "");
-
-                String timeFromStr = dropDate.getText().toString();
-                String timeToStr = endDate.getText().toString();
+                final String timeFromStr = dropDate.getText().toString();
+                final String timeToStr = endDate.getText().toString();
 
                 if(timeFromStr.isEmpty()){
                     Toast.makeText(ReservationActivity.this,"Morate uneti vreme rezervacije",Toast.LENGTH_LONG).show();
@@ -139,20 +158,26 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                     return;
                 }
 
-
-
                 mAPIService.updateCapacity(parkingTitle).enqueue(new Callback<Parking>() {
                     @Override
                     public void onResponse(Call<Parking> call, Response<Parking> response) {
                         bundle = new Bundle();
                         bundle.putString("value", "Uspesno ste rezervisali parking mesto!");
+
+                        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        pref_userName = sharedPreferences.getString("username", "");
+
+                        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+                        Reservation res = new Reservation(date, timeFromStr, timeToStr, pref_userName, parkingTitle);
+                        res.save();
                         startActivity(new Intent(getApplicationContext(), MainPageActivity.class).putExtras(bundle));
                         finish();
                     }
 
                     @Override
                     public void onFailure(Call<Parking> call, Throwable t) {
-                        Toast.makeText(ReservationActivity.this,"KITA",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ReservationActivity.this,"Sva mesta na parkingu su zauzeta! Pokusajte ponovo kasnije!",Toast.LENGTH_LONG).show();
                     }
                 });
 
