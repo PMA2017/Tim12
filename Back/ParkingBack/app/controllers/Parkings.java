@@ -93,12 +93,16 @@ public class Parkings extends Controller{
 	public static void updateCapacity(){
 		try{
 			String title = params.get("body").split("\"\"")[0].split("\"")[1];
-			//String title = title1.split("\"")[1];
 			List<models.Parking> parkings = models.Parking.find("byParkingname", title).fetch();
 			models.Parking parking = parkings.get(0);
-			parking.numberOfFreeSpaces = parking.numberOfFreeSpaces - 1;
-			parking.save();
-			renderJSON(parking);
+			if (parking.numberOfFreeSpaces > 0){
+				parking.numberOfFreeSpaces = parking.numberOfFreeSpaces - 1;
+				parking.save();
+				renderJSON(parking);
+			}
+			else{
+				//error("Sva mesta na parkingu su zauzeta! Pokusajte ponovo kasnije!");
+			}
 		}catch(Exception e){
 			error("Unable to read entity!");
 		}
