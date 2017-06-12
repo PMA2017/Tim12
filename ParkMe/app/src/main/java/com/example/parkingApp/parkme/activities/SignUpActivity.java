@@ -1,6 +1,8 @@
 package com.example.parkingApp.parkme.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -52,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String nameTxt = name.getText().toString();
                 String surnameTxt = surname.getText().toString();
-                String usernameTxt = username.getText().toString();
+                final String usernameTxt = username.getText().toString();
                 String emailTxt = email.getText().toString();
                 String passwordTxt = password.getText().toString();
                 String confirmPasswordTxt = confirmPassword.getText().toString();
@@ -77,6 +79,10 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             Toast.makeText(getApplicationContext(), "Uspešno kreiran korisnik!", Toast.LENGTH_LONG).show();
+                            SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = pref.edit();
+                            edit.putString("username", usernameTxt);
+                            edit.commit();
                             Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
                             startActivity(intent);
                         }

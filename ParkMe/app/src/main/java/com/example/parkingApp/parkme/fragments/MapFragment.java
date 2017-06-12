@@ -123,14 +123,19 @@ public class MapFragment extends Fragment {
                                     // for ActivityCompat#requestPermissions for more details.
                                     return;
                                 }
-                            mLastLocation = mlocManager.getLastKnownLocation(providerName);
-
-                            LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                            MarkerOptions markerOptions = new MarkerOptions();
-                            markerOptions.position(latLng);
-                            markerOptions.title("Current Position");
-                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                            myMarker = googleMap.addMarker(markerOptions);
+                            mlocManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+                            boolean networkEnabled = mlocManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                            if(networkEnabled) {
+                                mLastLocation = mlocManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                                if (mLastLocation != null) {
+                                    LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                                    MarkerOptions markerOptions = new MarkerOptions();
+                                    markerOptions.position(latLng);
+                                    markerOptions.title("Current Position");
+                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                                    myMarker = googleMap.addMarker(markerOptions);
+                                }
+                            }
                         }
                     }
 
@@ -152,17 +157,17 @@ public class MapFragment extends Fragment {
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-//                        if(marker.equals(myMarker)){
-                        SharedPreferences pref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor edit = pref.edit();
-                        edit.putString("parkingTitle", marker.getTitle());
-                        edit.apply();
+                        if(!marker.getTitle().equals("Current Position")){
+                            SharedPreferences pref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor edit = pref.edit();
+                            edit.putString("parkingTitle", marker.getTitle());
+                            edit.apply();
 
-//                            Bundle bundle = new Bundle();
-//                            bundle.putString("parkingTitle", marker.getTitle());
-                        Intent in = new Intent(getActivity(), ParkingDetailsActivity.class);
-                        startActivity(in);
-//                        }
+    //                            Bundle bundle = new Bundle();
+    //                            bundle.putString("parkingTitle", marker.getTitle());
+                            Intent in = new Intent(getActivity(), ParkingDetailsActivity.class);
+                            startActivity(in);
+                        }
                         return false;
                     }
                 });
