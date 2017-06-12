@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.example.parkingApp.parkme.model.Parking;
 import com.example.parkingApp.parkme.model.User;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +36,7 @@ public class ParkingDetailsActivity extends AppCompatActivity {
     private TextView opened;
     private TextView pay;
     private TextView info;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class ParkingDetailsActivity extends AppCompatActivity {
         opened = (TextView) findViewById(R.id.from_to);
         pay = (TextView) findViewById(R.id.pay);
         info = (TextView) findViewById(R.id.informations);
+        image = (ImageView) findViewById(R.id.parking_image);
 
         mAPIService = ApiUtils.getAPIService();
 
@@ -63,13 +67,23 @@ public class ParkingDetailsActivity extends AppCompatActivity {
                 if(response.body() != null) {
                     parkingName.setText(response.body().getParkingName());
                     parkingAddress.setText(response.body().getAdress());
-                    int percentage = (int)(((double)response.body().getNumberOfFreeSpaces())/((double)response.body().getTotalNumberOfSpaces()) * 100);
+                    int percentage = 0;
+                    if((double)response.body().getNumberOfFreeSpaces() == 0 ){
+                        percentage = 100;
+                    }
+                    else {
+                        percentage = (int) (((double) response.body().getNumberOfFreeSpaces()) / ((double) response.body().getTotalNumberOfSpaces()) * 100);
+                    }
                     capacity.setProgress(percentage);
                     price.append(" "+ Double.toString(response.body().getWorkingDayPrice()) + " RSD");
                     priceWeekend.append(" " + Double.toString(response.body().getWeekendPrice()) + " RSD");
                     opened.setText(response.body().getWorkTime() + " h");
                     pay.setText(response.body().getPaymentWay());
                     info.setText(response.body().getInformations());
+                    Picasso.with(ParkingDetailsActivity.this)
+                            .load(response.body().getImage())
+                            .resize(90, 90)
+                            .into(image);
 
                     SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                     SharedPreferences.Editor edit = pref.edit();

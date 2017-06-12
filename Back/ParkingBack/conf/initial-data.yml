@@ -36,7 +36,7 @@ models.Parking(parking3):
    workTime: 08:00-23:00
    paymentWay: kes,kartica,vauceri
    informations: Blizu centra
-   image: lala
+   image: http://www.mojnovisad.com/files/_thumb/600x400/news/3/0/7/1307/1307-41-big.jpg
    latitude: 45.246357
    longitude: 19.834294
    

@@ -73,6 +73,10 @@
     <string name="pref_radius">pref_radius</string>
     <string name="pref_sync">pref_sync</string>
 
+    <string name="pref_notification">pref_notification</string>
+    <string name="pref_notType">Obaveštenje o isteku rezervacije na: </string>
+    <string name="pref_not_list">pref_not_list</string>
+
     <string name="notifications">Obaveštenja</string>
     <string name="notif_on_my_review">Parking</string>
     <string name="notif_on_my_comment">On my comments</string>

@@ -77,6 +77,8 @@ public class MainPageActivity extends AppCompatActivity {
 
     private ParkingService mAPIService;
 
+    android.support.v4.app.Fragment fragment;
+
     TextView username, user_email;
     ImageView user_picture;
     JSONObject response, profile_pic_data, profile_pic_url;
@@ -164,19 +166,18 @@ public class MainPageActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
                 switch (item.getItemId()) {
                     case R.id.action_favorites:
 
                         break;
                     case R.id.action_schedules:
-                        android.support.v4.app.Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
                         if (fragment instanceof MapFragment)
                             ((MapFragment) fragment).getNearestParking();
                         break;
                     case R.id.action_music:
-                        Intent in = new Intent(getApplicationContext(), AdminAddParkingActivity.class);
-                        startActivity(in);
-
+                        if (fragment instanceof MapFragment)
+                            ((MapFragment) fragment).getCheapestParking();
                         break;
                 }
                 return false;

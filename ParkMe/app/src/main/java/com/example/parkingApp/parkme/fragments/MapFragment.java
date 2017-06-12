@@ -10,6 +10,8 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.Toast;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.activities.ParkingDetailsActivity;
@@ -52,6 +56,8 @@ public class MapFragment extends Fragment {
     Location mLastLocation;
     List<Marker> markerList;
     private ParkingService mAPIService;
+    List<Parking> parkings;
+    int i = 50;
 
     public MapFragment() {
     }
@@ -92,7 +98,7 @@ public class MapFragment extends Fragment {
                     @Override
                     public void onResponse(@NonNull Call<List<Parking>> call, @NonNull Response<List<Parking>> response) {
                         if (response.body() != null) {
-                            List<Parking> parkings = response.body();
+                            parkings = response.body();
                             for (int i = 0; i < parkings.size(); i++) {
                                 double latitude = Double.parseDouble(parkings.get(i).latitude);
                                 double longitude = Double.parseDouble(parkings.get(i).longitude);
@@ -195,6 +201,45 @@ public class MapFragment extends Fragment {
         return results[0];
     }
 
+    public void getCheapestParking(){
+        Collections.sort(parkings, new Comparator<Parking>() {
+            @Override
+            public int compare(Parking p1, Parking p2) {
+                return Double.valueOf(p1.getWorkingDayPrice()).compareTo(p2.getWorkingDayPrice());
+            }
+        });
+        for (Marker m:markerList) {
+            if(m.getTitle().equals(parkings.get(0).getParkingName())){
+                setMarkerBounce(m);
+            }
+        }
+    }
+
+    private void setMarkerBounce(final Marker marker) {
+        i = 50;
+        final Handler handler = new Handler();
+        final long startTime = SystemClock.uptimeMillis();
+        final long duration = 2000;
+        final Interpolator interpolator = new BounceInterpolator();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - startTime;
+                float t = Math.max(1 - interpolator.getInterpolation((float) elapsed/duration), 0);
+                marker.setAnchor(0.5f, 1.0f +  t);
+                i = i - 1;
+                if(i <= 0){
+                    return;
+                }
+                if (t > 0.0) {
+                    handler.postDelayed(this, 16);
+                } else {
+                    setMarkerBounce(marker);
+                }
+            }
+        });
+    }
 
     @Override
     public void onResume() {
