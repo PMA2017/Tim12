@@ -258,10 +258,17 @@ public class MapFragment extends Fragment {
         }
     }
 
+    public void setMarkersOnMap(){
+        for(Marker mar:markerList){
+            mar.setVisible(true);
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        setMarkersOnMap();
     }
 
     @Override

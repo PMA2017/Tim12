@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -179,6 +180,7 @@ public class MainPageActivity extends AppCompatActivity {
                 fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
                 switch (item.getItemId()) {
                     case R.id.action_favorites:
+                        ((MapFragment) fragment).setMarkersOnMap();
                         search.setVisibility(View.VISIBLE);
                         searchIcon.setVisibility(View.VISIBLE);
                         break;
@@ -199,6 +201,18 @@ public class MainPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ((MapFragment) fragment).searchParking(search.getText().toString());
+            }
+        });
+
+        search.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(search.getText().toString().equals("")){
+                    ((MapFragment) fragment).setMarkersOnMap();
+                    return true;
+                }else{
+                    return false;
+                }
             }
         });
 
