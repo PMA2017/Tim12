@@ -246,6 +246,18 @@ public class MapFragment extends Fragment {
         });
     }
 
+    public void searchParking(String searchParameter){
+        for(Parking p:parkings){
+            if(!p.getParkingName().toLowerCase().contains(searchParameter.toLowerCase())){
+                for(Marker mar : markerList){
+                    if(mar.getTitle().equals(p.getParkingName())){
+                        mar.setVisible(false);
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();

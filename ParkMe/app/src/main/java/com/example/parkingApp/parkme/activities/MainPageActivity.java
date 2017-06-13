@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -80,8 +81,11 @@ public class MainPageActivity extends AppCompatActivity {
     android.support.v4.app.Fragment fragment;
 
     TextView username, user_email;
+    EditText search;
+    ImageView searchIcon;
     ImageView user_picture;
     JSONObject response, profile_pic_data, profile_pic_url;
+    RelativeLayout wrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +113,10 @@ public class MainPageActivity extends AppCompatActivity {
         //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         mDrawerList.setAdapter(adapter);
+
+        search = (EditText) findViewById(R.id.search);
+        searchIcon = (ImageView) findViewById(R.id.seaarchImage);
+        wrapper = (RelativeLayout) findViewById(R.id.wrapper);
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -163,13 +171,16 @@ public class MainPageActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
                 switch (item.getItemId()) {
                     case R.id.action_favorites:
-
+                        search.setVisibility(View.VISIBLE);
+                        searchIcon.setVisibility(View.VISIBLE);
                         break;
                     case R.id.action_schedules:
                         if (fragment instanceof MapFragment)
@@ -184,6 +195,12 @@ public class MainPageActivity extends AppCompatActivity {
             }
         });
 
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MapFragment) fragment).searchParking(search.getText().toString());
+            }
+        });
 
         if (this.getIntent().getExtras() != null) {
             Toast.makeText(this, this.getIntent().getExtras().getString("value"), Toast.LENGTH_LONG).show();

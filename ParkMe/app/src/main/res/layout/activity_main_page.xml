@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/appbar"
-        android:layout_above="@+id/bottom_navigation">
+        android:layout_above="@+id/search">
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawerLayout"
@@ -108,6 +108,25 @@
     </android.support.v4.widget.DrawerLayout>
 
     </RelativeLayout>
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_height="45dp"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/bottom_navigation"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/seaarchImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/search"
+        android:layout_alignBottom="@+id/search"
+        android:layout_alignEnd="@+id/search"
+        android:layout_below="@+id/wrapper"
+        android:visibility="invisible"
+        android:layout_above="@+id/bottom_navigation"
+        android:src="@drawable/ic_action_search" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
