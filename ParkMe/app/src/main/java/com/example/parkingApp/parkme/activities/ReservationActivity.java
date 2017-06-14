@@ -26,6 +26,7 @@ import com.example.parkingApp.parkme.model.Parking;
 import com.example.parkingApp.parkme.model.Reservation;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -163,7 +164,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                     public void onResponse(Call<Parking> call, Response<Parking> response) {
                         bundle = new Bundle();
                         bundle.putString("value", "Uspesno ste rezervisali parking mesto!");
-
+                        FirebaseMessaging.getInstance().subscribeToTopic("reservation");
                         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                         pref_userName = sharedPreferences.getString("username", "");
 
