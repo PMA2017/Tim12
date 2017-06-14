@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -47,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
 
         callbackManager = CallbackManager.Factory.create();
@@ -61,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         mAPIService = ApiUtils.getAPIService();
 
-        Stetho.initializeWithDefaults(this);
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in2 = new Intent(getApplicationContext(),SignUpActivity.class);
+                Intent in2 = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(in2);
             }
         });
@@ -129,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
         final String username = email.getText().toString();
         final String pass = password.getText().toString();
 
-        progressDialog.show();
         //check if the stored password matches with password entered by user
         if (username.equals("") || pass.equals("")) {
             Toast.makeText(getApplicationContext(), "Morate popuniti sva polja", Toast.LENGTH_LONG).show();
@@ -138,8 +138,9 @@ public class MainActivity extends AppCompatActivity {
 
         mAPIService.getUser(username).enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if(response.body() != null) {
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                progressDialog.show();
+                if (response.body() != null) {
                     if (pass.equals(response.body().getPassword())) {
                         new android.os.Handler().postDelayed(
                                 new Runnable() {
@@ -151,8 +152,7 @@ public class MainActivity extends AppCompatActivity {
                                         SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                                         SharedPreferences.Editor edit = pref.edit();
                                         edit.putString("username", username);
-                                        edit.commit();
-                                        String df = "smor";
+                                        edit.apply();
 
                                     }
                                 }, 1000);
@@ -160,16 +160,15 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Korisničko ime i/ili lozinka ne postoje u bazi", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(MainActivity.this, "Korisničko ime i/ili lozinka ne postoje u bazi", Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
                 }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Korisničko ime i/ili lozinka ne postoje u bazi", Toast.LENGTH_LONG).show();
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                Toast.makeText(MainActivity.this, "Greška u povezivanju", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
         });

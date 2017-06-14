@@ -68,10 +68,6 @@ public class MainPageActivity extends AppCompatActivity {
     private ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
     private AlertDialog dialog;
 
-    private String synctime;
-    private boolean allowSync;
-    private String lookupRadius;
-
     private boolean allowReviewNotif;
     private boolean allowCommentedNotif;
     private SharedPreferences sharedPreferences;
@@ -237,7 +233,6 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     private void prepareMenu(ArrayList<NavItem> mNavItems) {
-        //mNavItems.add(new NavItem(getString(R.string.home), getString(R.string.home_long), R.drawable.ic_nearest_icon));
         mNavItems.add(new NavItem(getString(R.string.places), getString(R.string.places_long), R.drawable.ic_nearest_icon));
         mNavItems.add(new NavItem(getString(R.string.preferences), getString(R.string.preferences_long), R.drawable.ic_action_settings));
         mNavItems.add(new NavItem(getString(R.string.about), getString(R.string.about_long), R.drawable.ic_action_about));
@@ -246,11 +241,6 @@ public class MainPageActivity extends AppCompatActivity {
     }
 
     private void consultPreferences() {
-        synctime = sharedPreferences.getString(getString(R.string.pref_sync_list), "1");//1min
-        allowSync = sharedPreferences.getBoolean(getString(R.string.pref_sync), false);
-
-        lookupRadius = sharedPreferences.getString(getString(R.string.pref_radius), "1");//1km
-
         allowCommentedNotif = sharedPreferences.getBoolean(getString(R.string.notif_on_my_comment_key), false);
         allowReviewNotif = sharedPreferences.getBoolean(getString(R.string.notif_on_my_review_key), false);
 

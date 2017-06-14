@@ -36,6 +36,7 @@ public class ParkingDetailsActivity extends AppCompatActivity {
     private TextView opened;
     private TextView pay;
     private TextView info;
+    private TextView rating;
     private ImageView image;
 
     @Override
@@ -104,6 +105,16 @@ public class ParkingDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent in = new Intent(getApplicationContext(), ReservationActivity.class);
+                startActivity(in);
+            }
+        });
+
+        rating = (TextView) findViewById(R.id.link_rating);
+
+        rating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent in = new Intent(ParkingDetailsActivity.this, RateActivity.class);
                 startActivity(in);
             }
         });

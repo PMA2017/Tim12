@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.example.parkingApp.parkme.activities.RateActivity">
+
+    <RelativeLayout
+        android:id="@+id/comments"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:layout_alignParentTop="true">
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/comment"
+            android:numStars="5"
+            android:stepSize="1.0" />
+
+
+        <EditText
+            android:id="@+id/comment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_toStartOf="@+id/submit"
+            android:ellipsize="start"
+            android:hint="@string/comment"
+            android:layout_alignParentBottom="true"
+            android:inputType="text"
+            android:maxLines="5"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/ic_action_send" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comments">
+
+    <LinearLayout
+        android:id="@+id/show_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/comments"
+        android:layout_marginTop="19dp" />
+    </ScrollView>
+
+</RelativeLayout>

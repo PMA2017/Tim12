@@ -58,12 +58,19 @@ public class Parking {
     @Expose
     public String longitude;
 
+    @SerializedName("ratingSum")
+    @Expose
+    public int ratingSum;
+    @SerializedName("numberOfVotes")
+    @Expose
+    public int numberOfVotes;
+
 
     public Parking() {
 
     }
 
-    public Parking(String parkingName, String adress, int totalNumberOfSpaces, int numberOfFreeSpaces, double workingDayPrice, double weekendPrice, String workTime, String paymentWay, String informations, String image, String latitude, String longitude) {
+    public Parking(String parkingName, String adress, int totalNumberOfSpaces, int numberOfFreeSpaces, double workingDayPrice, double weekendPrice, String workTime, String paymentWay, String informations, String image, String latitude, String longitude, int ratingSum, int numberOfVotes) {
         this.parkingName = parkingName;
         this.adress = adress;
         this.totalNumberOfSpaces = totalNumberOfSpaces;
@@ -76,6 +83,8 @@ public class Parking {
         this.image = image;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.ratingSum = ratingSum;
+        this.numberOfVotes = numberOfVotes;
     }
 
     public String getParkingName() {
@@ -174,6 +183,22 @@ public class Parking {
         this.longitude = longitude;
     }
 
+    public int getRatingSum() {
+        return ratingSum;
+    }
+
+    public void setRatingSum(int ratingSum) {
+        this.ratingSum = ratingSum;
+    }
+
+    public int getNumberOfVotes() {
+        return numberOfVotes;
+    }
+
+    public void setNumberOfVotes(int numberOfVotes) {
+        this.numberOfVotes = numberOfVotes;
+    }
+
     @Override
     public String toString() {
         return "Parking{" +
@@ -189,6 +214,8 @@ public class Parking {
                 ", image='" + image + '\'' +
                 ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
+                ", ratingSum=" + ratingSum +
+                ", numberOfVotes=" + numberOfVotes +
                 '}';
     }
 }

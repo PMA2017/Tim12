@@ -1,5 +1,6 @@
 package com.example.parkingApp.parkme.servicecall;
 
+import com.example.parkingApp.parkme.model.Comment;
 import com.example.parkingApp.parkme.model.Parking;
 import com.example.parkingApp.parkme.model.User;
 
@@ -28,6 +29,15 @@ public interface ParkingService {
     @GET("parkings/get/title/{title}")
     Call<Parking> getParking(@Path("title") String title);
 
+    @POST("parkings/rate")
+    Call<Parking> rate(@Body Parking parking);
+
     @POST("parkings/updateCapacity")
     Call<Parking> updateCapacity(@Body String title);
+
+    @GET("comments/get/{title}")
+    Call<List<Comment>> listCommentsByParking(@Path("title") String title);
+
+    @PUT("comments/create")
+    Call<Comment> createComment(@Body Comment comment);
 }

@@ -186,5 +186,17 @@
         android:text="@string/reservation"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/link_rating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reservation"
+        android:autoLink="web"
+        android:gravity="center"
+        android:text="@string/rating"
+        android:textSize="16sp"
+        android:textColor="@color/appName"
+        android:textStyle="bold" />
+
     </RelativeLayout>
 </ScrollView>
