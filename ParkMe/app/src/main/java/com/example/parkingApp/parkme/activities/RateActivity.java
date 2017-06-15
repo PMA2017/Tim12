@@ -1,7 +1,6 @@
 package com.example.parkingApp.parkme.activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -16,13 +15,8 @@ import android.widget.Toast;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.model.Comment;
 import com.example.parkingApp.parkme.model.Parking;
-import com.example.parkingApp.parkme.model.Reservation;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
-import com.example.parkingApp.parkme.servicecall.RateParams;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,18 +55,27 @@ public class RateActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(ratingBar.getRating() <= 0){
+                    Toast.makeText(RateActivity.this, "Molimo vas da ocenite uslugu prilikom komentarisanja!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(comm.getText().toString().isEmpty()){
+                    Toast.makeText(RateActivity.this, "Tekst komentara ne moze biti prazan!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 insertComment();
                 Parking rp = new Parking();
                 rp.parkingName = parkingTitle;
                 rp.ratingSum = (int)ratingBar.getRating();
+
                 mAPIService.rate(rp).enqueue(new Callback<Parking>() {
                     @Override
-                    public void onResponse(Call<Parking> call, Response<Parking> response) {
-                        Toast.makeText(RateActivity.this, "Good", Toast.LENGTH_LONG).show();
+                    public void onResponse(@NonNull Call<Parking> call, @NonNull Response<Parking> response) {
+                        ratingBar.setRating(0F);
                     }
 
                     @Override
-                    public void onFailure(Call<Parking> call, Throwable t) {
+                    public void onFailure(@NonNull Call<Parking> call, @NonNull Throwable t) {
                         Toast.makeText(RateActivity.this, "Failure", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -88,7 +91,7 @@ public class RateActivity extends AppCompatActivity {
         mAPIService.createComment(comment).enqueue(new Callback<Comment>() {
             @Override
             public void onResponse(@NonNull Call<Comment> call, @NonNull Response<Comment> response) {
-                Toast.makeText(RateActivity.this,"Poslao je jebeni komentar!!!", Toast.LENGTH_LONG).show();
+                //Toast.makeText(RateActivity.this,"Poslao je komentar!!!", Toast.LENGTH_LONG).show();
                 createNewTextView(comment);
                 comm.setText("");
             }
@@ -133,4 +136,5 @@ public class RateActivity extends AppCompatActivity {
         commentList.addView(textView);
         integer += 1;
     }
+
 }

@@ -35,6 +35,9 @@ public interface ParkingService {
     @POST("parkings/updateCapacity")
     Call<Parking> updateCapacity(@Body String title);
 
+    @POST("parkings/update")
+    Call<Parking> updateParking(@Body Parking parking);
+
     @GET("comments/get/{title}")
     Call<List<Comment>> listCommentsByParking(@Path("title") String title);
 

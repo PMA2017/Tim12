@@ -23,6 +23,7 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Toast;
 import com.example.parkingApp.parkme.R;
+import com.example.parkingApp.parkme.activities.EditParking;
 import com.example.parkingApp.parkme.activities.ParkingDetailsActivity;
 import com.example.parkingApp.parkme.model.Parking;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
@@ -57,6 +58,7 @@ public class MapFragment extends Fragment {
     List<Marker> markerList;
     private ParkingService mAPIService;
     List<Parking> parkings;
+    private String username;
     int i = 50;
 
     public MapFragment() {
@@ -83,6 +85,9 @@ public class MapFragment extends Fragment {
 
         markerList = new ArrayList<>();
 
+        SharedPreferences preferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        username = preferences.getString("username", "");
+
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
@@ -106,6 +111,16 @@ public class MapFragment extends Fragment {
                                 LatLng parking = new LatLng(latitude, longitude);
                                 myMarker = googleMap.addMarker(new MarkerOptions().position(parking).title(parkings.get(i).parkingName).snippet("Parking"));
                                 markerList.add(myMarker);
+                            }
+
+                            if(markerList.size() != 0){
+                                if(username.equals("admin")){
+                                    markerList.get(0).setVisible(false);
+                                    markerList.get(1).setVisible(false);
+                                } else if(username.equals("manager")){
+                                    markerList.get(1).setVisible(false);
+                                    markerList.get(2).setVisible(false);
+                                }
                             }
 
                             LocationManager mlocManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -138,7 +153,6 @@ public class MapFragment extends Fragment {
                             }
                         }
                     }
-
                     @Override
                     public void onFailure(@NonNull Call<List<Parking>> call, Throwable t) {
                         Toast.makeText(getActivity(), "Backend call failed", Toast.LENGTH_LONG).show();
@@ -157,16 +171,28 @@ public class MapFragment extends Fragment {
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-                        if(!marker.getTitle().equals("Current Position")){
+
+
+                        if(username.equals("admin") || username.equals("manager")){
                             SharedPreferences pref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                             SharedPreferences.Editor edit = pref.edit();
                             edit.putString("parkingTitle", marker.getTitle());
                             edit.apply();
-
-    //                            Bundle bundle = new Bundle();
-    //                            bundle.putString("parkingTitle", marker.getTitle());
-                            Intent in = new Intent(getActivity(), ParkingDetailsActivity.class);
+                            Intent in = new Intent(getActivity(), EditParking.class);
                             startActivity(in);
+                        }else{
+                            if(!marker.getTitle().equals("Current Position")){
+                                SharedPreferences pref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor edit = pref.edit();
+                                edit.putString("parkingTitle", marker.getTitle());
+                                edit.apply();
+
+                                //                            Bundle bundle = new Bundle();
+                                //                            bundle.putString("parkingTitle", marker.getTitle());
+                                Intent in = new Intent(getActivity(), ParkingDetailsActivity.class);
+                                startActivity(in);
+                            }
+                            return false;
                         }
                         return false;
                     }

@@ -91,6 +91,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void startMainActivity()
     {
         startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
-        finish(); // da nebi mogao da ode back na splash
+        finish(); // da ne bi mogao da ode back na splash
     }
 }

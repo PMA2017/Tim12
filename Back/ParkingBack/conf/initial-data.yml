@@ -1,4 +1,4 @@
-models.Parking(parking1):
+Parking(parking1):
    parkingName: Centar
    adress: Jevrejska 10
    totalNumberOfSpaces: 50
@@ -8,11 +8,10 @@ models.Parking(parking1):
    workTime: 09:00-22:00
    paymentWay: kes,kartica
    informations: info
-   image: lala
+   image: http://www.novosti.rs/upload/images/2016//06/07/bg-parking-na-Slaviji-0606-.jpg
    latitude: 45.253728
    longitude: 19.841242
-   
-models.Parking(parking2):
+Parking(parking2):
    parkingName: Liman
    adress: Bulevar cara Lazara 45
    totalNumberOfSpaces: 100
@@ -22,11 +21,10 @@ models.Parking(parking2):
    workTime: 08:00-19:00
    paymentWay: kes
    informations: dobar parking
-   image: lala
+   image: https://www.umass.edu/transportation/sites/default/files/IMG_2943_0.JPG
    latitude: 45.242579
    longitude: 19.836829
-   
-models.Parking(parking3):
+Parking(parking3):
    parkingName: Grbavica
    adress: Gogoljeva 17
    totalNumberOfSpaces: 40
@@ -39,8 +37,7 @@ models.Parking(parking3):
    image: http://www.mojnovisad.com/files/_thumb/600x400/news/3/0/7/1307/1307-41-big.jpg
    latitude: 45.246357
    longitude: 19.834294
-   
-models.User(user1):
+User(user1):
    name: Dragan
    surname: Vidakovic
    username: gagi
@@ -48,13 +45,28 @@ models.User(user1):
    email: gagi@gmail.com
    isAdmin: false
    registrationNumber: 074M168
-   
-models.User(user2):
+User(user2):
    name: Jana
    surname: Vojnovic
    username: xijana
    password: rospija
    email: xi@gmail.com
    isAdmin: false
-   registrationNumber: NS231LS
+   registrationNumber: NS231LS  
+User(user3):
+   name: Admir
+   surname: Admirovic
+   username: admin
+   password: admin
+   email: admin@admin.com
+   isAdmin: true
+   registrationNumber: ADMIN
+User(user4):
+   name: Men
+   surname: Menadzer
+   username: manager
+   password: manager
+   email: man@man.com
+   isAdmin: true
+   registrationNumber: MEN
    

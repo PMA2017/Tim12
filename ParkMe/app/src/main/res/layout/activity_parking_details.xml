@@ -14,189 +14,211 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/detail_panel"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:background="@drawable/custom_border"
-        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/detail_panel"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/custom_border"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/parking_image"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_alignParentStart="true"
-            android:layout_margin="5dp" />
+            <ImageView
+                android:id="@+id/parking_image"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentStart="true"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:id="@+id/parking_name"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/parking_image"
+                android:text="@string/parking_name"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/parking_address"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@id/parking_name"
+                android:layout_toEndOf="@+id/parking_image"
+                android:text="@string/parking_address"
+                android:textColor="@color/black" />
+
+            <ProgressBar
+                android:id="@+id/customProgressBar"
+                style="@style/CustomProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@+id/parking_image"
+                android:layout_margin="10dp" />
+
+            <RatingBar
+                android:id="@+id/parkingRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:numStars="5"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:layout_centerInParent="true"
+                android:stepSize="0.1"
+                android:layout_below="@+id/customProgressBar"/>
+
+            <TextView
+                android:id="@+id/rateTxt"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_below="@id/customProgressBar"
+                android:layout_marginBottom="15dp"
+                android:text="Ocena parkinga"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/parking_full"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_above="@id/customProgressBar"
+                android:layout_marginTop="15dp"
+                android:text="@string/parking_full"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/parking_name"
+            android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_margin="20dp"
-            android:layout_toEndOf="@+id/parking_image"
-            android:text="@string/parking_name"
+            android:layout_below="@id/detail_panel"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/prices" />
+
+        <TextView
+            android:id="@+id/price_over_week"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/price"
+            android:text="@string/parking_week"
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/parking_address"
+            android:id="@+id/price_weekend"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_below="@id/parking_name"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@+id/parking_image"
-            android:text="@string/parking_address"
+            android:layout_below="@id/price_over_week"
+            android:text="@string/parking_weekend"
             android:textColor="@color/black" />
 
-        <ProgressBar
-            android:id="@+id/customProgressBar"
-            style="@style/CustomProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_below="@+id/parking_image"
-            android:layout_margin="10dp" />
+        <View
+            android:id="@+id/hr1"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_below="@id/price_weekend"
+            android:layout_marginTop="5dp"
+            android:background="#808080" />
 
         <TextView
-            android:id="@+id/parking_full"
+            android:id="@+id/opened"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_below="@id/customProgressBar"
-            android:layout_marginStart="20dp"
-            android:text="@string/parking_full"
-            android:textAlignment="center"
+            android:layout_below="@id/hr1"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/opened" />
+
+        <TextView
+            android:id="@+id/from_to"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/opened"
+            android:text="@string/from_to"
             android:textColor="@color/black" />
 
-    </RelativeLayout>
+        <View
+            android:id="@+id/hr2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_below="@id/from_to"
+            android:layout_marginTop="5dp"
+            android:background="#808080" />
 
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/detail_panel"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/prices" />
+        <TextView
+            android:id="@+id/pay_way"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/hr2"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/pay_way" />
 
-    <TextView
-        android:id="@+id/price_over_week"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/price"
-        android:text="@string/parking_week"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/pay"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/pay_way"
+            android:text="@string/pay"
+            android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/price_weekend"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/price_over_week"
-        android:text="@string/parking_weekend"
-        android:textColor="@color/black" />
+        <View
+            android:id="@+id/hr3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_below="@id/pay"
+            android:layout_marginTop="5dp"
+            android:background="#808080" />
 
-    <View
-        android:id="@+id/hr1"
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_below="@id/price_weekend"
-        android:layout_marginTop="5dp"
-        android:background="#808080" />
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/hr3"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/info" />
 
-    <TextView
-        android:id="@+id/opened"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/hr1"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/opened" />
+        <TextView
+            android:id="@+id/informations"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@id/info"
+            android:text="@string/info"
+            android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/from_to"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/opened"
-        android:text="@string/from_to"
-        android:textColor="@color/black" />
+        <View
+            android:id="@+id/hr4"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_below="@id/informations"
+            android:layout_marginTop="5dp"
+            android:background="#808080" />
 
-    <View
-        android:id="@+id/hr2"
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_below="@id/from_to"
-        android:layout_marginTop="5dp"
-        android:background="#808080" />
+        <Button
+            android:id="@+id/reservation"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:layout_below="@id/hr4"
+            android:layout_centerInParent="true"
+            android:layout_margin="13dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/reservation"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/pay_way"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/hr2"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/pay_way" />
-
-    <TextView
-        android:id="@+id/pay"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/pay_way"
-        android:text="@string/pay"
-        android:textColor="@color/black" />
-
-    <View
-        android:id="@+id/hr3"
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_below="@id/pay"
-        android:layout_marginTop="5dp"
-        android:background="#808080" />
-
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/hr3"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/info" />
-
-    <TextView
-        android:id="@+id/informations"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@id/info"
-        android:text="@string/info"
-        android:textColor="@color/black" />
-
-    <View
-        android:id="@+id/hr4"
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_below="@id/informations"
-        android:layout_marginTop="5dp"
-        android:background="#808080" />
-
-    <Button
-        android:id="@+id/reservation"
-        android:layout_width="150dp"
-        android:layout_height="35dp"
-        android:layout_below="@id/hr4"
-        android:layout_centerInParent="true"
-        android:layout_margin="13dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/reservation"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/link_rating"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/reservation"
-        android:autoLink="web"
-        android:gravity="center"
-        android:text="@string/rating"
-        android:textSize="16sp"
-        android:textColor="@color/appName"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/link_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/reservation"
+            android:autoLink="web"
+            android:gravity="center"
+            android:text="@string/rating"
+            android:textColor="@color/appName"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 </ScrollView>

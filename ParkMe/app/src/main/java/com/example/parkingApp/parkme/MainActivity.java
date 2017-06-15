@@ -30,7 +30,7 @@ import com.facebook.stetho.Stetho;
 
 import org.json.JSONObject;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,9 +38,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button login;
-    EditText email;
-    EditText password;
+    private EditText email;
+    private EditText password;
     private LoginButton fbLoginButton;
     private ParkingService mAPIService;
     private CallbackManager callbackManager;
@@ -58,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         TextView reg = (TextView) findViewById(R.id.link_signup);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
-        login = (Button) findViewById(R.id.sign_in_button);
+        Button login = (Button) findViewById(R.id.sign_in_button);
         fbLoginButton = (LoginButton) findViewById(R.id.login_button);
-        fbLoginButton.setReadPermissions(Arrays.asList("email"));
+        fbLoginButton.setReadPermissions(Collections.singletonList("email"));
 
         mAPIService = ApiUtils.getAPIService();
 
@@ -136,10 +135,10 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        progressDialog.show();
         mAPIService.getUser(username).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                progressDialog.show();
                 if (response.body() != null) {
                     if (pass.equals(response.body().getPassword())) {
                         new android.os.Handler().postDelayed(
@@ -168,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                Toast.makeText(MainActivity.this, "Greška u povezivanju", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Greška", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
         });

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.parkingApp.parkme.activities.EditParking">
+
+    <TextView
+        android:id="@+id/nameTxt"
+        android:layout_height="20dp"
+        android:layout_width="150dp"
+        android:layout_margin="15dp"
+        android:textSize="16sp"
+        android:text="@string/parking_name"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/nameValue"
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:layout_margin="15dp"
+        android:textSize="16sp"
+        android:layout_toEndOf="@+id/nameTxt"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/addressTxt"
+        android:layout_height="20dp"
+        android:layout_width="150dp"
+        android:text="@string/parking_address"
+        android:layout_marginStart="15dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/nameTxt"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/addressValue"
+        android:layout_height="20dp"
+        android:layout_width="150dp"
+        android:layout_marginStart="15dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/nameTxt"
+        android:layout_toEndOf="@id/addressTxt"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/totalNumberTxt"
+        android:layout_height="20dp"
+        android:layout_width="150dp"
+        android:text="Ukupan broj mesta"
+        android:layout_marginStart="15dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/addressTxt"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/totalNumberValue"
+        android:layout_height="20dp"
+        android:layout_width="150dp"
+        android:layout_marginStart="15dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/addressTxt"
+        android:layout_toEndOf="@+id/totalNumberTxt"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/free"
+        android:layout_height="40dp"
+        android:layout_width="150dp"
+        android:text="Broj slobodnih mesta"
+        android:layout_marginStart="13dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/totalNumberTxt"
+        android:textColor="@color/black"
+        />
+
+    <EditText
+        android:id="@+id/numberOfFreeSpaces"
+        android:layout_height="40dp"
+        android:layout_width="150dp"
+        android:inputType="number"
+        android:layout_below="@+id/totalNumberTxt"
+        android:layout_toEndOf="@+id/free"/>
+
+    <TextView
+    android:id="@+id/workPrice"
+    android:layout_height="40dp"
+    android:layout_width="150dp"
+    android:text="Cena radnim danom"
+    android:layout_marginStart="13dp"
+    android:textSize="16sp"
+    android:layout_marginBottom="15dp"
+    android:layout_below="@+id/free"
+    android:textColor="@color/black"
+    />
+
+    <TextView
+        android:id="@+id/workPriceTxt"
+        android:layout_height="40dp"
+        android:layout_width="150dp"
+        android:textSize="16sp"
+        android:layout_below="@+id/free"
+        android:layout_toEndOf="@+id/free"/>
+
+    <TextView
+        android:id="@+id/weekendPrice"
+        android:layout_height="40dp"
+        android:layout_width="150dp"
+        android:text="Cena vikendom"
+        android:layout_marginStart="13dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/workPrice"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/weekendPriceTxt"
+        android:layout_height="40dp"
+        android:layout_width="150dp"
+        android:textSize="16sp"
+        android:layout_below="@+id/workPrice"
+        android:layout_toEndOf="@+id/free"/>
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_height="40dp"
+        android:layout_width="150dp"
+        android:text="Dodatne informacije"
+        android:layout_marginStart="13dp"
+        android:textSize="16sp"
+        android:layout_below="@+id/weekendPrice"
+        android:textColor="@color/black"
+        />
+
+    <EditText
+        android:id="@+id/infoTxt"
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/info" />
+
+    <Button
+        android:id="@+id/edit"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_margin="13dp"
+        android:background="@color/colorPrimary"
+        android:text="Izmeni parking"
+        android:textStyle="bold" />
+
+</RelativeLayout>
