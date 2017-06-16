@@ -272,6 +272,8 @@ public class MainPageActivity extends AppCompatActivity {
             startActivity(preference);
             //..
         } else if (position == 2) {
+            Intent in = new Intent(MainPageActivity.this, AboutActivity.class);
+            startActivity(in);
 
         } else if (position == 3) {
             Intent preference = new Intent(MainPageActivity.this, MyReservationsActivity.class);

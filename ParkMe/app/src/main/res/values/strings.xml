@@ -64,6 +64,15 @@
     <string name="about_long">Saznajte više</string>
     <string name="sync_data_long">Lista mojih rezervacija</string>
 
+    <string name="about_txt">ParkMe aplikacija omogućava korisnicima da na brz i jednostavan način pronađu i/ili rezervišu
+    slobodno parking mesto na željenoj lokaciji u gradu. \n Takođe, aplikacija podržava i obaveštenja korisnicima o
+    isteku parkinga, kao i lokaciju najbližeg parkinga u odnosu na trenutnu lokaciju i najpovoljnije cene parkinga. \n \n
+        Razvojni tim: \n \n
+        Milana Dapra       <b>(milana.dapra@gmail.com)</b> \n
+        Marko Ivetić       <b>(markoIvetic93@gmail.com)</b> \n
+        Boško Šogura       <b>(bolesogura93@gmail.com)</b> \n
+    </string>
+
     <string name="pref_sync_title">Dozvoli sinhronizaciju</string>
     <string name="pref_sync_summ">Dozvoli aplikaciji da sinhronizuje automatski, kada je wifi dostupan</string>
     <string name="pref_syncConnectionType">Interval sinhronizacije</string>

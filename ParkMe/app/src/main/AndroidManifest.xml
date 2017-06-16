@@ -80,6 +80,9 @@
         <activity
             android:name=".activities.MyReservationsActivity"
             android:label="Moje rezervacije" />
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="O aplikaciji" />
     </application>
 
 </manifest>
