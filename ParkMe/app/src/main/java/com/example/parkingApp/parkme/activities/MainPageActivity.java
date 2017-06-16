@@ -274,7 +274,8 @@ public class MainPageActivity extends AppCompatActivity {
         } else if (position == 2) {
 
         } else if (position == 3) {
-            //..
+            Intent preference = new Intent(MainPageActivity.this, MyReservationsActivity.class);
+            startActivity(preference);
         } else if (position == 4) {
             logout();
             disconnectFromFacebook();

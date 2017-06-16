@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -49,17 +50,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SignUpActivity"
-            android:label="Registracija korisnika"/>
-        <activity android:name=".activities.PreferenceActivity"
-            android:label="Podešavanja"/>
+        <activity
+            android:name=".activities.SignUpActivity"
+            android:label="Registracija korisnika" />
+        <activity
+            android:name=".activities.PreferenceActivity"
+            android:label="Podešavanja" />
         <activity
             android:name=".activities.MainPageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.ParkingDetailsActivity"
-            android:label="Detalji parkinga"/>
-        <activity android:name=".activities.ReservationActivity"
-            android:label="Rezervacija parking mesta"/>
+        <activity
+            android:name=".activities.ParkingDetailsActivity"
+            android:label="Detalji parkinga" />
+        <activity
+            android:name=".activities.ReservationActivity"
+            android:label="Rezervacija parking mesta" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -69,8 +74,12 @@
         <activity
             android:name=".activities.RateActivity"
             android:label="Komenari i ocene" />
-        <activity android:name=".activities.EditParking"
-            android:label="Izmena parkinga"/>
+        <activity
+            android:name=".activities.EditParking"
+            android:label="Izmena parkinga" />
+        <activity
+            android:name=".activities.MyReservationsActivity"
+            android:label="Moje rezervacije" />
     </application>
 
 </manifest>

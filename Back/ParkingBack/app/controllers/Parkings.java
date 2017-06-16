@@ -108,5 +108,23 @@ public class Parkings extends Controller{
 			error("Unable to read entity!");
 		}
 	}
+	
+	public static void increaseCapacity(){
+		try{
+			String title = params.get("body").split("\"\"")[0].split("\"")[1];
+			List<models.Parking> parkings = models.Parking.find("byParkingname", title).fetch();
+			models.Parking parking = parkings.get(0);
+			if (parking.numberOfFreeSpaces > 0){
+				parking.numberOfFreeSpaces = parking.numberOfFreeSpaces + 1;
+				parking.save();
+				renderJSON(parking);
+			}
+			else{
+				//error("Sva mesta na parkingu su zauzeta! Pokusajte ponovo kasnije!");
+			}
+		}catch(Exception e){
+			error("Unable to read entity!");
+		}
+	}
 
 }

@@ -21,6 +21,7 @@ POST	/parkings/update								Parkings.update
 PUT		/parkings/create								Parkings.create
 DELETE	/parkings/delete/{id}							Parkings.delete
 POST    /parkings/updateCapacity                        Parkings.updateCapacity
+POST    /parkings/increaseCapacity                      Parkings.increaseCapacity
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
