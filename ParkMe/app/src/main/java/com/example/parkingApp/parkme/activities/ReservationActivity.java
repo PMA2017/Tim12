@@ -189,8 +189,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                 tmp = -1;
             }
         });
-
-
     }
 
     private void getPaymentWay() {
