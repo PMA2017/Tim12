@@ -1,7 +1,5 @@
 package com.example.parkingApp.parkme.activities;
 
-import android.app.ActivityManager;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,7 +10,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,22 +18,17 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.parkingApp.parkme.MainActivity;
 import com.example.parkingApp.parkme.fragments.MapFragment;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.adapters.DrawerListAdapter;
 import com.example.parkingApp.parkme.model.NavItem;
-import com.example.parkingApp.parkme.model.Parking;
-import com.example.parkingApp.parkme.model.Reservation;
-import com.example.parkingApp.parkme.model.User;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
 import com.facebook.AccessToken;
@@ -44,18 +36,9 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainPageActivity extends AppCompatActivity {
 
@@ -63,18 +46,9 @@ public class MainPageActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private RelativeLayout mDrawerPane;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
-    private ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
-    private AlertDialog dialog;
-
-    private boolean allowReviewNotif;
-    private boolean allowCommentedNotif;
+    private ArrayList<NavItem> mNavItems = new ArrayList<>();
     private SharedPreferences sharedPreferences;
     String pref_userName;
-
-    private ParkingService mAPIService;
-
     android.support.v4.app.Fragment fragment;
 
     TextView username, user_email;
@@ -96,10 +70,8 @@ public class MainPageActivity extends AppCompatActivity {
 
         prepareMenu(mNavItems);
 
-        mAPIService = ApiUtils.getAPIService();
-
-
-        mTitle = mDrawerTitle = getTitle();
+        CharSequence mDrawerTitle;
+        mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mDrawerList = (ListView) findViewById(R.id.navList);
 
@@ -155,18 +127,27 @@ public class MainPageActivity extends AppCompatActivity {
                 toolbar,  /* nav drawer image to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
-        ) {
-            public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+        );
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
             }
 
+            @Override
             public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle("ParkMe");
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                bottomNavigationView.setVisibility(View.INVISIBLE);
             }
-        };
-//        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
 
         if (savedInstanceState == null) {
             selectItemFromDrawer(0);
@@ -239,18 +220,10 @@ public class MainPageActivity extends AppCompatActivity {
         mNavItems.add(new NavItem("Odjava", "Izlogujte se iz aplikacije", R.drawable.ic_action_logout));
     }
 
-    private void consultPreferences() {
-        allowCommentedNotif = sharedPreferences.getBoolean(getString(R.string.notif_on_my_comment_key), false);
-        allowReviewNotif = sharedPreferences.getBoolean(getString(R.string.notif_on_my_review_key), false);
-
-    }
-
     @Override
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-
-        consultPreferences();
     }
 
 

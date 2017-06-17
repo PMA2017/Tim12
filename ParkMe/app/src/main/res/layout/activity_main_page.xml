@@ -103,13 +103,12 @@
 
         </RelativeLayout>
 
-
     </android.support.v4.widget.DrawerLayout>
-
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/search"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_width="match_parent"
         android:layout_above="@+id/bottom_navigation"
         android:visibility="invisible" />
@@ -135,5 +134,5 @@
         app:itemTextColor="@color/black"
         app:menu="@menu/bottom_navigation_menu" />
 
-    </RelativeLayout>
+
 </RelativeLayout>

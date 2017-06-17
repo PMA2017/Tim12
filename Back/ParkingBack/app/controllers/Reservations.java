@@ -40,6 +40,11 @@ public class Reservations extends Controller{
 		JsonParser jsonParser = new JsonParser();
 		JsonObject jsonObject = (JsonObject)jsonParser.parse(jsonAsString);
 		models.Reservation newReservation = new Gson().fromJson(jsonObject, models.Reservation.class);
+		
+		List<models.Reservation> reservations = models.Reservation.find("byParkingAndUserAndTimefromAndTimeto", newReservation.parking, newReservation.user, newReservation.timeFrom, newReservation.timeTo).fetch();
+		if(reservations.size() != 0){
+			return;
+		}
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String reportDate = df.format(newReservation.timeFrom);

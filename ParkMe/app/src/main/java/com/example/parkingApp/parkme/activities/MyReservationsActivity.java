@@ -66,8 +66,6 @@ public class MyReservationsActivity extends AppCompatActivity {
             textView.setTextColor(Color.parseColor("#000000"));
             linear.addView(textView);
         }
-
-
     }
 
     private void createNewTextView(final Reservation reservation) {
@@ -140,7 +138,8 @@ public class MyReservationsActivity extends AppCompatActivity {
                                                 String prking = splt[0];
                                                 String datum = splt[2];
                                                 String ddo = splt[4];
-                                                List<Reservation> books = Reservation.find(Reservation.class, "parking = ? and time_From = ? and date = ?", prking, ddo, datum);
+                                                String ddd = splt[6];
+                                                List<Reservation> books = Reservation.find(Reservation.class, "parking = ? and time_From = ? and date = ? and time_To = ?", prking, ddo, datum, ddd);
                                                 books.get(0).setActive(false);
                                                 books.get(0).save();
                                                 Intent intent = new Intent(MyReservationsActivity.this, MainPageActivity.class);

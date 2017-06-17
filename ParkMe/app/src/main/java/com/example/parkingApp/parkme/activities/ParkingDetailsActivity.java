@@ -94,8 +94,8 @@ public class ParkingDetailsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Parking> call, Throwable t) {
-                Toast.makeText(ParkingDetailsActivity.this, "Failure", Toast.LENGTH_LONG).show();
+            public void onFailure(@NonNull Call<Parking> call, @NonNull Throwable t) {
+                Toast.makeText(ParkingDetailsActivity.this, "Greška", Toast.LENGTH_LONG).show();
             }
         });
 
