@@ -288,8 +288,19 @@ public class MapFragment extends Fragment {
     }
 
     public void setMarkersOnMap(){
-        for(Marker mar:markerList){
-            mar.setVisible(true);
+        if(markerList.size() != 0){
+            if(username.equals("admin")){
+                markerList.get(0).setVisible(false);
+                markerList.get(1).setVisible(false);
+            } else if(username.equals("manager")){
+                markerList.get(1).setVisible(false);
+                markerList.get(2).setVisible(false);
+            }
+            else{
+                for(Marker mar:markerList){
+                    mar.setVisible(true);
+                }
+            }
         }
     }
 
@@ -298,7 +309,6 @@ public class MapFragment extends Fragment {
         super.onResume();
         mMapView.onResume();
         setMarkersOnMap();
-        getParkings();
     }
 
     @Override
