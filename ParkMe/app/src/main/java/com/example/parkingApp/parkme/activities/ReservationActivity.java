@@ -156,7 +156,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         });
     }
 
-
     private void getPaymentWay() {
         mAPIService.getParking(parkingTitle).enqueue(new Callback<Parking>() {
             @Override
