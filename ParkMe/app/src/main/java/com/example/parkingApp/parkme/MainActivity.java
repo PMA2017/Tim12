@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.provider.Settings.Secure;
 
 import com.example.parkingApp.parkme.activities.MainPageActivity;
 import com.example.parkingApp.parkme.activities.SignUpActivity;
@@ -26,6 +28,8 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.stetho.Stetho;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
@@ -35,6 +39,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static java.security.AccessController.getContext;
+
 public class MainActivity extends AppCompatActivity {
 
     Button login;
@@ -43,12 +49,18 @@ public class MainActivity extends AppCompatActivity {
     private LoginButton fbLoginButton;
     private ParkingService mAPIService;
     private CallbackManager callbackManager;
+    private static final String TAG = "FCM Service";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String android_id = Secure.getString(getApplication().getContentResolver(),
+                Secure.ANDROID_ID);
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "Refreshed token: " + refreshedToken);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
+        FirebaseMessaging.getInstance().subscribeToTopic("reservation");
 
         callbackManager = CallbackManager.Factory.create();
 

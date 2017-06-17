@@ -164,7 +164,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                     public void onResponse(Call<Parking> call, Response<Parking> response) {
                         bundle = new Bundle();
                         bundle.putString("value", "Uspesno ste rezervisali parking mesto!");
-                        FirebaseMessaging.getInstance().subscribeToTopic("reservation");
+                        //FirebaseMessaging.getInstance().subscribeToTopic("reservation");
                         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                         pref_userName = sharedPreferences.getString("username", "");
 
