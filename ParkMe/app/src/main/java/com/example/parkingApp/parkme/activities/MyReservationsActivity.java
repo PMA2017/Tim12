@@ -145,6 +145,7 @@ public class MyReservationsActivity extends AppCompatActivity {
                                                 books.get(0).save();
                                                 Intent intent = new Intent(MyReservationsActivity.this, MainPageActivity.class);
                                                 startActivity(intent);
+                                                ReservationActivity.getInstance().finish();
                                             }
 
                                             @Override

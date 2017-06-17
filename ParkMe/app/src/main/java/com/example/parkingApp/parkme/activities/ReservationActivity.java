@@ -6,9 +6,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +34,9 @@ import com.example.parkingApp.parkme.model.Reservation;
 import com.example.parkingApp.parkme.model.ReservationBack;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
+import com.example.parkingApp.parkme.servicecall.PushParams;
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,12 +57,17 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     String parkingTitle;
     ArrayList<String> payWay = new ArrayList<>();
     int tmp;
-
+    final static private long ONE_SECOND = 1000;
+    PendingIntent pi;
+    BroadcastReceiver br;
+    AlarmManager am;
+    public static ReservationActivity reserAct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
-
+        reserAct = this;
+        setupAlarmManager();
         dropDate = (EditText) findViewById(R.id.dateDrop);
         endDate = (EditText) findViewById(R.id.dateEnd);
         Button confirmRes = (Button) findViewById(R.id.confirmReservation);
@@ -107,6 +122,32 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         });
     }
 
+    private void setupAlarmManager(){
+        br = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context c, Intent i) {
+                String token = FirebaseInstanceId.getInstance().getToken();
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ReservationActivity.this);
+                String time = sharedPreferences.getString(ReservationActivity.this.getString(R.string.pref_not_list), "0");
+                PushParams pushParams = new PushParams(token, time);
+                mAPIService.sendPushNot(pushParams).enqueue(new Callback<Integer>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                    }
+
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable t) {
+                        Toast.makeText(ReservationActivity.this,"NIJE poslata push notifikacija.",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        };
+        registerReceiver(br, new IntentFilter("com.example.parkingApp") );
+        pi = PendingIntent.getBroadcast( this, 0, new Intent("com.example.parkingApp"),
+                0 );
+        am = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
+    }
+
     private void confirmReservation() {
 
         final String timeFromStr = dropDate.getText().toString();
@@ -136,13 +177,13 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         }
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String currentDateandTime = sdf.format(new Date());
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date resultFrom = new Date();
         Date resultTo = new Date();
         String tempDateFrom = currentDateandTime + " " + dropDate.getText().toString().split("h")[0];
-        String tempDateTo = currentDateandTime + " " + endDate.getText().toString().split("h")[0];
+        final String tempDateTo = currentDateandTime + " " + endDate.getText().toString().split("h")[0];
         try {
             resultFrom = formatter.parse(tempDateFrom);
             resultTo = formatter.parse(tempDateTo);
@@ -158,21 +199,21 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         mAPIService.reserve(res).enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
-                Toast.makeText(ReservationActivity.this,"Hej hej hej sve je okej",Toast.LENGTH_LONG).show();
                 mAPIService.updateCapacity(parkingTitle).enqueue(new Callback<Parking>() {
                     @Override
                     public void onResponse(@NonNull Call<Parking> call, @NonNull Response<Parking> response) {
                         bundle = new Bundle();
                         bundle.putString("value", "Uspešno ste rezervisali parking mesto!");
 
-
-
                         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
                         Reservation res = new Reservation(date, timeFromStr, timeToStr, pref_userName, parkingTitle, true);
                         res.save();
+
+                        SchedulePushNotification(tempDateTo);
+
                         startActivity(new Intent(getApplicationContext(), MainPageActivity.class).putExtras(bundle));
-                        finish();
+                        //finish();
                     }
 
                     @Override
@@ -183,6 +224,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                 tmp = 1;
             }
 
+
+
             @Override
             public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
                 Toast.makeText(ReservationActivity.this,"#nevalja",Toast.LENGTH_LONG).show();
@@ -191,6 +234,26 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         });
     }
 
+    private void SchedulePushNotification(String tempDateTo)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ReservationActivity.this);
+        boolean allowSyncNotif = sharedPreferences.getBoolean(ReservationActivity.this.getString(R.string.notif_on_my_review_key), false);
+        long time = Long.parseLong(sharedPreferences.getString(ReservationActivity.this.getString(R.string.pref_not_list), "0")) * 60000;
+
+        if(allowSyncNotif) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            String currentDateAndTime = sdf.format(new Date());
+            long milisecond = 0;
+            try {
+                milisecond = formatter.parse(tempDateTo).getTime() - formatter.parse(currentDateAndTime).getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() +
+                    milisecond - time, pi);
+        }
+    }
     private void getPaymentWay() {
         mAPIService.getParking(parkingTitle).enqueue(new Callback<Parking>() {
             @Override
@@ -228,4 +291,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
 
     }
 
+    public static ReservationActivity getInstance()
+    {
+        return reserAct;
+    }
 }

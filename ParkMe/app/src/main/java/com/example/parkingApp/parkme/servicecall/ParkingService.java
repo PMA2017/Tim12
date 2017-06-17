@@ -44,6 +44,9 @@ public interface ParkingService {
     @POST("parkings/update")
     Call<Parking> updateParking(@Body Parking parking);
 
+    @POST("parkings/sendPushNot")
+    Call<Integer> sendPushNot(@Body PushParams pushParams);
+
     @GET("comments/get/{title}")
     Call<List<Comment>> listCommentsByParking(@Path("title") String title);
 
@@ -55,4 +58,5 @@ public interface ParkingService {
 
     @POST("/reservations/delete")
     Call<Integer> deleteRes(@Body ReservationBack reservation);
+
 }
