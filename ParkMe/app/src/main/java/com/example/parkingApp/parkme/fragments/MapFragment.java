@@ -65,8 +65,7 @@ public class MapFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.activity_map, container, false);
 
@@ -99,65 +98,7 @@ public class MapFragment extends Fragment {
                     googleMap.setMyLocationEnabled(true);
                 }
 
-                mAPIService.getParkings().enqueue(new Callback<List<Parking>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<Parking>> call, @NonNull Response<List<Parking>> response) {
-                        if (response.body() != null) {
-                            parkings = response.body();
-                            for (int i = 0; i < parkings.size(); i++) {
-                                double latitude = Double.parseDouble(parkings.get(i).latitude);
-                                double longitude = Double.parseDouble(parkings.get(i).longitude);
-
-                                LatLng parking = new LatLng(latitude, longitude);
-                                myMarker = googleMap.addMarker(new MarkerOptions().position(parking).title(parkings.get(i).parkingName).snippet("Parking"));
-                                markerList.add(myMarker);
-                            }
-
-                            if(markerList.size() != 0){
-                                if(username.equals("admin")){
-                                    markerList.get(0).setVisible(false);
-                                    markerList.get(1).setVisible(false);
-                                } else if(username.equals("manager")){
-                                    markerList.get(1).setVisible(false);
-                                    markerList.get(2).setVisible(false);
-                                }
-                            }
-
-                            LocationManager mlocManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                            Criteria locationCritera = new Criteria();
-                            String providerName = mlocManager.getBestProvider(locationCritera,
-                                    true);
-                            if (providerName != null)
-                                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                    // TODO: Consider calling
-                                    //    ActivityCompat#requestPermissions
-                                    // here to request the missing permissions, and then overriding
-                                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                    //                                          int[] grantResults)
-                                    // to handle the case where the user grants the permission. See the documentation
-                                    // for ActivityCompat#requestPermissions for more details.
-                                    return;
-                                }
-                            mlocManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-                            boolean networkEnabled = mlocManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                            if(networkEnabled) {
-                                mLastLocation = mlocManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                                if (mLastLocation != null) {
-                                    LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                                    MarkerOptions markerOptions = new MarkerOptions();
-                                    markerOptions.position(latLng);
-                                    markerOptions.title("Current Position");
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                                    myMarker = googleMap.addMarker(markerOptions);
-                                }
-                            }
-                        }
-                    }
-                    @Override
-                    public void onFailure(@NonNull Call<List<Parking>> call, Throwable t) {
-                        Toast.makeText(getActivity(), "Backend call failed", Toast.LENGTH_LONG).show();
-                    }
-                });
+                getParkings();
 
                 // For dropping a marker at a point on the Map
                 LatLng NoviSad = new LatLng(45.2622, 19.8519);
@@ -171,8 +112,6 @@ public class MapFragment extends Fragment {
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-
-
                         if(username.equals("admin") || username.equals("manager")){
                             SharedPreferences pref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                             SharedPreferences.Editor edit = pref.edit();
@@ -187,8 +126,6 @@ public class MapFragment extends Fragment {
                                 edit.putString("parkingTitle", marker.getTitle());
                                 edit.apply();
 
-                                //                            Bundle bundle = new Bundle();
-                                //                            bundle.putString("parkingTitle", marker.getTitle());
                                 Intent in = new Intent(getActivity(), ParkingDetailsActivity.class);
                                 startActivity(in);
                             }
@@ -201,6 +138,70 @@ public class MapFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void getParkings() {
+        mAPIService.getParkings().enqueue(new Callback<List<Parking>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Parking>> call, @NonNull Response<List<Parking>> response) {
+                if (response.body() != null) {
+                    parkings = response.body();
+                    for (int i = 0; i < parkings.size(); i++) {
+                        double latitude = Double.parseDouble(parkings.get(i).latitude);
+                        double longitude = Double.parseDouble(parkings.get(i).longitude);
+
+                        LatLng parking = new LatLng(latitude, longitude);
+                        myMarker = googleMap.addMarker(new MarkerOptions().position(parking).title(parkings.get(i).parkingName).snippet("Parking"));
+                        markerList.add(myMarker);
+                    }
+                    if(markerList.size() != 0){
+                        if(username.equals("admin")){
+                            markerList.get(0).setVisible(false);
+                            markerList.get(1).setVisible(false);
+                        } else if(username.equals("manager")){
+                            markerList.get(1).setVisible(false);
+                            markerList.get(2).setVisible(false);
+                        }
+                    }
+                        getMyLocation();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<List<Parking>> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), "Backend call failed", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void getMyLocation() {
+        LocationManager mlocManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Criteria locationCritera = new Criteria();
+        String providerName = mlocManager.getBestProvider(locationCritera,
+                true);
+        if (providerName != null)
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+        mlocManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        boolean networkEnabled = mlocManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if(networkEnabled) {
+            mLastLocation = mlocManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (mLastLocation != null) {
+                LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title("Current Position");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                myMarker = googleMap.addMarker(markerOptions);
+            }
+        }
     }
 
     public void getNearestParking() {
