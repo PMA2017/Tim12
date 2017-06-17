@@ -23,6 +23,10 @@ DELETE	/parkings/delete/{id}							Parkings.delete
 POST    /parkings/updateCapacity                        Parkings.updateCapacity
 POST    /parkings/increaseCapacity                      Parkings.increaseCapacity
 
+# Reservation
+POST    /reservations/reserve                           Reservations.reserve
+POST    /reservations/delete							Reservations.deleteReservation
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

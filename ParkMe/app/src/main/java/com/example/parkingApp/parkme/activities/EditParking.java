@@ -81,21 +81,21 @@ public class EditParking extends AppCompatActivity {
                 parking.setNumberOfFreeSpaces(Integer.parseInt(numberOfFreeSpaces.getText().toString()));
                 parking.setInformations(informations.getText().toString());
                 if(numberOfFreeSpaces.getText().toString().isEmpty()){
-                    Toast.makeText(EditParking.this, "Broj slobodnih mesta ne moze biti prazan!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditParking.this, "Broj slobodnih mesta ne može biti prazan!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 mAPIService.updateParking(parking).enqueue(new Callback<Parking>() {
                     @Override
                     public void onResponse(@NonNull Call<Parking> call, @NonNull Response<Parking> response) {
-                        Toast.makeText(EditParking.this, "Uspesno ste izmenili parking", Toast.LENGTH_LONG).show();
+                        Toast.makeText(EditParking.this, "Uspešno ste izmenili parking", Toast.LENGTH_LONG).show();
                         Intent in = new Intent(EditParking.this, MainPageActivity.class);
                         startActivity(in);
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<Parking> call, @NonNull Throwable t) {
-                        Toast.makeText(EditParking.this, "Greska", Toast.LENGTH_LONG).show();
+                        Toast.makeText(EditParking.this, "Greška", Toast.LENGTH_LONG).show();
                     }
                 });
             }

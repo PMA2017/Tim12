@@ -60,7 +60,7 @@ public class RateActivity extends AppCompatActivity {
                     return;
                 }
                 if(comm.getText().toString().isEmpty()){
-                    Toast.makeText(RateActivity.this, "Tekst komentara ne moze biti prazan!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RateActivity.this, "Tekst komentara ne može biti prazan!", Toast.LENGTH_LONG).show();
                     return;
                 }
                 insertComment();
@@ -76,7 +76,7 @@ public class RateActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NonNull Call<Parking> call, @NonNull Throwable t) {
-                        Toast.makeText(RateActivity.this, "Failure", Toast.LENGTH_LONG).show();
+                        Toast.makeText(RateActivity.this, "Greška", Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -91,7 +91,6 @@ public class RateActivity extends AppCompatActivity {
         mAPIService.createComment(comment).enqueue(new Callback<Comment>() {
             @Override
             public void onResponse(@NonNull Call<Comment> call, @NonNull Response<Comment> response) {
-                //Toast.makeText(RateActivity.this,"Poslao je komentar!!!", Toast.LENGTH_LONG).show();
                 createNewTextView(comment);
                 comm.setText("");
             }

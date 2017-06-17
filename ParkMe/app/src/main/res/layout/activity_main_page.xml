@@ -34,8 +34,7 @@
         android:id="@+id/wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/appbar"
-        android:layout_above="@+id/search">
+        android:layout_below="@+id/appbar">
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawerLayout"
@@ -107,7 +106,6 @@
 
     </android.support.v4.widget.DrawerLayout>
 
-    </RelativeLayout>
 
     <EditText
         android:id="@+id/search"
@@ -123,7 +121,6 @@
         android:layout_alignTop="@+id/search"
         android:layout_alignBottom="@+id/search"
         android:layout_alignEnd="@+id/search"
-        android:layout_below="@+id/wrapper"
         android:visibility="invisible"
         android:layout_above="@+id/bottom_navigation"
         android:src="@drawable/ic_action_search" />
@@ -138,5 +135,6 @@
         app:itemTextColor="@color/black"
         app:menu="@menu/bottom_navigation_menu" />
 
+    </RelativeLayout>
 
 </RelativeLayout>

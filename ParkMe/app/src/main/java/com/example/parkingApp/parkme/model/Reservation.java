@@ -21,16 +21,19 @@ public class Reservation extends SugarRecord {
 
     private String parking;
 
+    private boolean active;
+
     public Reservation() {
 
     }
 
-    public Reservation(String date, String timeFrom, String timeTo, String user, String parking) {
+    public Reservation(String date, String timeFrom, String timeTo, String user, String parking, boolean active) {
         this.date = date;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
         this.user = user;
         this.parking = parking;
+        this.active = active;
     }
 
     public void setDate(String date) {
@@ -73,14 +76,23 @@ public class Reservation extends SugarRecord {
         return parking;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
-                "date=" + date +
-                ", timeFrom=" + timeFrom +
-                ", timeTo=" + timeTo +
+                "date='" + date + '\'' +
+                ", timeFrom='" + timeFrom + '\'' +
+                ", timeTo='" + timeTo + '\'' +
                 ", user='" + user + '\'' +
                 ", parking='" + parking + '\'' +
+                ", active=" + active +
                 '}';
     }
 }

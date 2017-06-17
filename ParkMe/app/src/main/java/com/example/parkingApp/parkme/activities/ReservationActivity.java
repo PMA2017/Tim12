@@ -1,4 +1,5 @@
 package com.example.parkingApp.parkme.activities;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import com.android.datetimepicker.time.TimePickerDialog;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.model.Parking;
 import com.example.parkingApp.parkme.model.Reservation;
+import com.example.parkingApp.parkme.model.ReservationBack;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
 import retrofit2.Call;
@@ -44,6 +46,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     String pref_userName;
     String parkingTitle;
     ArrayList<String> payWay = new ArrayList<>();
+    int tmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,30 +135,63 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             return;
         }
 
-        mAPIService.updateCapacity(parkingTitle).enqueue(new Callback<Parking>() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDateandTime = sdf.format(new Date());
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date resultFrom = new Date();
+        Date resultTo = new Date();
+        String tempDateFrom = currentDateandTime + " " + dropDate.getText().toString().split("h")[0];
+        String tempDateTo = currentDateandTime + " " + endDate.getText().toString().split("h")[0];
+        try {
+            resultFrom = formatter.parse(tempDateFrom);
+            resultTo = formatter.parse(tempDateTo);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        pref_userName = sharedPreferences.getString("username", "");
+
+        ReservationBack res = new ReservationBack(resultFrom, resultTo, pref_userName, parkingTitle);
+
+        mAPIService.reserve(res).enqueue(new Callback<Integer>() {
             @Override
-            public void onResponse(@NonNull Call<Parking> call, @NonNull Response<Parking> response) {
-                bundle = new Bundle();
-                bundle.putString("value", "Uspesno ste rezervisali parking mesto!");
+            public void onResponse(@NonNull Call<Integer> call, @NonNull Response<Integer> response) {
+                Toast.makeText(ReservationActivity.this,"Hej hej hej sve je okej",Toast.LENGTH_LONG).show();
+                mAPIService.updateCapacity(parkingTitle).enqueue(new Callback<Parking>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Parking> call, @NonNull Response<Parking> response) {
+                        bundle = new Bundle();
+                        bundle.putString("value", "Uspešno ste rezervisali parking mesto!");
 
-                sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                pref_userName = sharedPreferences.getString("username", "");
 
-                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-                Reservation res = new Reservation(date, timeFromStr, timeToStr, pref_userName, parkingTitle);
-                res.save();
-                startActivity(new Intent(getApplicationContext(), MainPageActivity.class).putExtras(bundle));
-                finish();
+                        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+                        Reservation res = new Reservation(date, timeFromStr, timeToStr, pref_userName, parkingTitle, true);
+                        res.save();
+                        startActivity(new Intent(getApplicationContext(), MainPageActivity.class).putExtras(bundle));
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Parking> call, @NonNull Throwable t) {
+                        Toast.makeText(ReservationActivity.this,"Sva mesta na parkingu su zauzeta! Pokušajte ponovo kasnije!",Toast.LENGTH_LONG).show();
+                    }
+                });
+                tmp = 1;
             }
 
             @Override
-            public void onFailure(@NonNull Call<Parking> call, @NonNull Throwable t) {
-                Toast.makeText(ReservationActivity.this,"Sva mesta na parkingu su zauzeta! Pokusajte ponovo kasnije!",Toast.LENGTH_LONG).show();
+            public void onFailure(@NonNull Call<Integer> call, @NonNull Throwable t) {
+                Toast.makeText(ReservationActivity.this,"#nevalja",Toast.LENGTH_LONG).show();
+                tmp = -1;
             }
         });
-    }
 
+
+    }
 
     private void getPaymentWay() {
         mAPIService.getParking(parkingTitle).enqueue(new Callback<Parking>() {

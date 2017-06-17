@@ -2,12 +2,15 @@ package com.example.parkingApp.parkme.servicecall;
 
 import com.example.parkingApp.parkme.model.Comment;
 import com.example.parkingApp.parkme.model.Parking;
+import com.example.parkingApp.parkme.model.Reservation;
+import com.example.parkingApp.parkme.model.ReservationBack;
 import com.example.parkingApp.parkme.model.User;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -46,4 +49,10 @@ public interface ParkingService {
 
     @PUT("comments/create")
     Call<Comment> createComment(@Body Comment comment);
+
+    @POST("/reservations/reserve")
+    Call<Integer> reserve(@Body ReservationBack reservation);
+
+    @POST("/reservations/delete")
+    Call<Integer> deleteRes(@Body ReservationBack reservation);
 }

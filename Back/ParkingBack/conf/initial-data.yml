@@ -69,4 +69,8 @@ User(user4):
    email: man@man.com
    isAdmin: true
    registrationNumber: MEN
-   
+Reservation(res1):
+   timeFrom: 2017-06-15 20:00:00
+   timeTo: 2017-06-15 21:00:00
+   user: xijana
+   parking: Centar
