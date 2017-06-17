@@ -65,7 +65,8 @@
                 android:scaleY="0.7"
                 android:layout_centerInParent="true"
                 android:stepSize="0.1"
-                android:layout_below="@+id/customProgressBar"/>
+                android:layout_below="@+id/customProgressBar"
+                android:isIndicator="true"/>
 
             <TextView
                 android:id="@+id/rateTxt"
@@ -81,10 +82,10 @@
                 android:id="@+id/parking_full"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_above="@id/customProgressBar"
+                android:layout_toEndOf="@+id/parking_image"
+                android:layout_below="@+id/parking_address"
                 android:layout_marginTop="15dp"
                 android:text="@string/parking_full"
-                android:textAlignment="center"
                 android:textColor="@color/black" />
 
         </RelativeLayout>

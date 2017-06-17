@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
-        FirebaseMessaging.getInstance().subscribeToTopic("reservation");
+        //FirebaseMessaging.getInstance().subscribeToTopic("reservation");
 
         callbackManager = CallbackManager.Factory.create();
 
