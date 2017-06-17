@@ -128,6 +128,7 @@ public class MainPageActivity extends AppCompatActivity {
                 R.string.drawer_open,  /* "open drawer" description for accessibility */
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         );
+        
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -136,11 +137,15 @@ public class MainPageActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 bottomNavigationView.setVisibility(View.INVISIBLE);
+                search.setVisibility(View.INVISIBLE);
+                searchIcon.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
                 bottomNavigationView.setVisibility(View.VISIBLE);
+                search.setVisibility(View.VISIBLE);
+                searchIcon.setVisibility(View.VISIBLE);
             }
 
             @Override
