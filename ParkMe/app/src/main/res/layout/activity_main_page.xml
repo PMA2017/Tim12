@@ -109,7 +109,7 @@
 
     <EditText
         android:id="@+id/search"
-        android:layout_height="45dp"
+        android:layout_height="30dp"
         android:layout_width="match_parent"
         android:layout_above="@+id/bottom_navigation"
         android:visibility="invisible" />
@@ -136,5 +136,4 @@
         app:menu="@menu/bottom_navigation_menu" />
 
     </RelativeLayout>
-
 </RelativeLayout>

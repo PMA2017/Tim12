@@ -81,6 +81,7 @@ public class MainPageActivity extends AppCompatActivity {
     EditText search;
     ImageView searchIcon;
     ImageView user_picture;
+    BottomNavigationView bottomNavigationView;
     JSONObject response, profile_pic_data, profile_pic_url;
     RelativeLayout wrapper;
 
@@ -102,6 +103,10 @@ public class MainPageActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mDrawerList = (ListView) findViewById(R.id.navList);
 
+        bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.bottom_navigation);
+
+
         // Populate the Navigtion Drawer with options
         mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
         DrawerListAdapter adapter = new DrawerListAdapter(this, mNavItems);
@@ -121,6 +126,29 @@ public class MainPageActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
         }
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+                switch (item.getItemId()) {
+                    case R.id.action_favorites:
+                        ((MapFragment) fragment).setMarkersOnMap();
+                        search.setVisibility(View.VISIBLE);
+                        searchIcon.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.action_schedules:
+                        if (fragment instanceof MapFragment)
+                            ((MapFragment) fragment).getNearestParking();
+                        break;
+                    case R.id.action_music:
+                        if (fragment instanceof MapFragment)
+                            ((MapFragment) fragment).getCheapestParking();
+                        break;
+                }
+                return false;
+            }
+        });
+
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */
@@ -129,14 +157,12 @@ public class MainPageActivity extends AppCompatActivity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-//                getActionBar().setTitle(mTitle);
                 getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
-//                getActionBar().setTitle(mDrawerTitle);
-                getSupportActionBar().setTitle("iReviewer");
+                getSupportActionBar().setTitle("ParkMe");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -165,33 +191,6 @@ public class MainPageActivity extends AppCompatActivity {
         String jsondata = intent.getStringExtra("jsondata");
         setUserProfile(jsondata);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
-
-
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
-                switch (item.getItemId()) {
-                    case R.id.action_favorites:
-                        ((MapFragment) fragment).setMarkersOnMap();
-                        search.setVisibility(View.VISIBLE);
-                        searchIcon.setVisibility(View.VISIBLE);
-                        break;
-                    case R.id.action_schedules:
-                        if (fragment instanceof MapFragment)
-                            ((MapFragment) fragment).getNearestParking();
-                        break;
-                    case R.id.action_music:
-                        if (fragment instanceof MapFragment)
-                            ((MapFragment) fragment).getCheapestParking();
-                        break;
-                }
-                return false;
-            }
-        });
 
         searchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
