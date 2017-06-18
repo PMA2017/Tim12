@@ -15,7 +15,7 @@ public class ReservationBack {
     @Expose
     public Date timeTo;
 
-    @SerializedName("user")
+    @SerializedName("resUser")
     @Expose
     public String user;
 
