@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.model.Parking;
 import com.example.parkingApp.parkme.model.Reservation;
-import com.example.parkingApp.parkme.model.ReservationBack;
+import com.example.parkingApp.parkme.model.MyReservation;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
 
@@ -119,7 +119,7 @@ public class MyReservationsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                final ReservationBack res = new ReservationBack(resultFrom,resultTo,username,parking);
+                final MyReservation res = new MyReservation(resultFrom,resultTo,username,parking);
 
                 new AlertDialog.Builder(MyReservationsActivity.this)
                         .setTitle("Brisanje rezervacije")

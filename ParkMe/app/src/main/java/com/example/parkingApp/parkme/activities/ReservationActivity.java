@@ -31,7 +31,7 @@ import com.android.datetimepicker.time.TimePickerDialog;
 import com.example.parkingApp.parkme.R;
 import com.example.parkingApp.parkme.model.Parking;
 import com.example.parkingApp.parkme.model.Reservation;
-import com.example.parkingApp.parkme.model.ReservationBack;
+import com.example.parkingApp.parkme.model.MyReservation;
 import com.example.parkingApp.parkme.servicecall.ApiUtils;
 import com.example.parkingApp.parkme.servicecall.ParkingService;
 import com.example.parkingApp.parkme.servicecall.PushParams;
@@ -194,7 +194,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         pref_userName = sharedPreferences.getString("username", "");
 
-        ReservationBack res = new ReservationBack(resultFrom, resultTo, pref_userName, parkingTitle);
+        MyReservation res = new MyReservation(resultFrom, resultTo, pref_userName, parkingTitle);
 
         mAPIService.reserve(res).enqueue(new Callback<Integer>() {
             @Override

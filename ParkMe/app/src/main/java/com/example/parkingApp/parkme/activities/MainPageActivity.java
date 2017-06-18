@@ -55,6 +55,8 @@ public class MainPageActivity extends AppCompatActivity {
     EditText search;
     ImageView searchIcon;
     ImageView user_picture;
+    private CharSequence mTitle;
+    CharSequence mDrawerTitle;
     BottomNavigationView bottomNavigationView;
     JSONObject response, profile_pic_data, profile_pic_url;
     RelativeLayout wrapper;
@@ -70,8 +72,7 @@ public class MainPageActivity extends AppCompatActivity {
 
         prepareMenu(mNavItems);
 
-        CharSequence mDrawerTitle;
-        mDrawerTitle = getTitle();
+        mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mDrawerList = (ListView) findViewById(R.id.navList);
 
@@ -135,12 +136,16 @@ public class MainPageActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
+                getSupportActionBar().setTitle("Mesta");
+                invalidateOptionsMenu();
                 bottomNavigationView.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
+                getSupportActionBar().setTitle(mTitle);
                 bottomNavigationView.setVisibility(View.VISIBLE);
+                invalidateOptionsMenu();
             }
 
             @Override
@@ -304,6 +309,12 @@ public class MainPageActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getSupportActionBar().setTitle(mTitle);
     }
 
     @Override

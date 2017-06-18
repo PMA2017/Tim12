@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class ReservationBack {
+public class MyReservation {
 
     @SerializedName("timeFrom")
     @Expose
@@ -17,21 +17,21 @@ public class ReservationBack {
 
     @SerializedName("resUser")
     @Expose
-    public String user;
+    public String resUser;
 
     @SerializedName("parking")
     @Expose
     public String parking;
 
-    public ReservationBack(){
+    public MyReservation(){
 
     }
 
-    public ReservationBack(Date timeFrom, Date timeTo, String user, String parking) {
+    public MyReservation(Date timeFrom, Date timeTo, String resUser, String parking) {
         super();
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
-        this.user = user;
+        this.resUser = resUser;
         this.parking = parking;
     }
 
@@ -51,12 +51,12 @@ public class ReservationBack {
         this.timeTo = timeTo;
     }
 
-    public String getUser() {
-        return user;
+    public String getResUser() {
+        return resUser;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setResUser(String resUser) {
+        this.resUser = resUser;
     }
 
     public String getParking() {
@@ -72,7 +72,7 @@ public class ReservationBack {
         return "ReservationBack{" +
                 "timeFrom=" + timeFrom +
                 ", timeTo=" + timeTo +
-                ", user='" + user + '\'' +
+                ", resUser='" + resUser + '\'' +
                 ", parking='" + parking + '\'' +
                 '}';
     }

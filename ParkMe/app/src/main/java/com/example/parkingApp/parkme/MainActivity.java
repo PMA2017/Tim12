@@ -148,20 +148,14 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.body() != null) {
                     if (pass.equals(response.body().getPassword())) {
-                        new android.os.Handler().postDelayed(
-                                new Runnable() {
-                                    public void run() {
-                                        Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
-                                        startActivity(intent);
-                                        progressDialog.dismiss();
+                        Intent intent = new Intent(getApplicationContext(), MainPageActivity.class);
+                        startActivity(intent);
+                        progressDialog.dismiss();
 
-                                        SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor edit = pref.edit();
-                                        edit.putString("username", username);
-                                        edit.apply();
-
-                                    }
-                                }, 1000);
+                        SharedPreferences pref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor edit = pref.edit();
+                        edit.putString("username", username);
+                        edit.apply();
                     } else {
                         Toast.makeText(MainActivity.this, "Korisničko ime i/ili lozinka ne postoje u bazi", Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
@@ -174,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                Toast.makeText(MainActivity.this, "Greška", Toast.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }
         });
