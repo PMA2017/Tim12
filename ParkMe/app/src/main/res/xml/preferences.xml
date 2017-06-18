@@ -11,7 +11,7 @@
             android:title="@string/notif_on_my_review" />
 
         <ListPreference
-            android:defaultValue="1"
+            android:defaultValue="5"
             android:dependency="@string/notif_on_my_review_key"
             android:dialogTitle="@string/pref_notType"
             android:entries="@array/pref_notification_entries"

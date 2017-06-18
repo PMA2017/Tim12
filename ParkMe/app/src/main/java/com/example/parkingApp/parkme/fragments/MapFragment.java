@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class MapFragment extends Fragment {
     private ParkingService mAPIService;
     List<Parking> parkings;
     private String username;
+    Polyline line = null;
     int i = 50;
 
     public MapFragment() {
@@ -218,13 +220,10 @@ public class MapFragment extends Fragment {
             }
         });
         Toast.makeText(getActivity(),markerList.get(0).getTitle(),Toast.LENGTH_LONG).show();
-        PolylineOptions line=
-                new PolylineOptions().add(new LatLng(markerList.get(0).getPosition().latitude,
+        line=googleMap.addPolyline(new PolylineOptions().add(new LatLng(markerList.get(0).getPosition().latitude,
                                 markerList.get(0).getPosition().longitude),
                         new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()))
-                        .width(5).color(Color.RED);
-
-        googleMap.addPolyline(line);
+                        .width(5).color(Color.RED));
     }
 
     public static float getDistanceBetweenPoints(double firstLatitude, double firstLongitude, double secondLatitude, double secondLongitude) {
@@ -274,6 +273,9 @@ public class MapFragment extends Fragment {
     }
 
     public void searchParking(String searchParameter){
+        if(line != null){
+            line.remove();
+        }
         for(Parking p:parkings){
             if(!p.getParkingName().toLowerCase().contains(searchParameter.toLowerCase())){
                 for(Marker mar : markerList){
@@ -286,8 +288,19 @@ public class MapFragment extends Fragment {
     }
 
     public void setMarkersOnMap(){
-        for(Marker mar:markerList){
-            mar.setVisible(true);
+        if(markerList.size() != 0){
+            if(username.equals("admin")){
+                markerList.get(0).setVisible(false);
+                markerList.get(1).setVisible(false);
+            } else if(username.equals("manager")){
+                markerList.get(1).setVisible(false);
+                markerList.get(2).setVisible(false);
+            }
+            else{
+                for(Marker mar:markerList){
+                    mar.setVisible(true);
+                }
+            }
         }
     }
 

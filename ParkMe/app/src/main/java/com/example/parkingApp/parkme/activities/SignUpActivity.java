@@ -98,8 +98,6 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this,t.getMessage(),Toast.LENGTH_LONG).show();
                 }
             });
-
-
         }
     }
 }
