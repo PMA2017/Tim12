@@ -148,8 +148,6 @@ public class MainPageActivity extends AppCompatActivity {
             public void onDrawerClosed(View drawerView) {
                 getSupportActionBar().setTitle(mTitle);
                 bottomNavigationView.setVisibility(View.VISIBLE);
-                search.setVisibility(View.VISIBLE);
-                searchIcon.setVisibility(View.VISIBLE);
                 invalidateOptionsMenu();
             }
 
@@ -317,11 +315,6 @@ public class MainPageActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        getSupportActionBar().setTitle(mTitle);
-    }
 
     @Override
     public void onBackPressed() {

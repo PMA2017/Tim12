@@ -122,7 +122,7 @@ public class MapFragment extends Fragment {
                             Intent in = new Intent(getActivity(), EditParking.class);
                             startActivity(in);
                         }else{
-                            if(!marker.getTitle().equals("Current Position")){
+                            if(!marker.getTitle().equals("Moja lokacija")){
                                 SharedPreferences pref = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor edit = pref.edit();
                                 edit.putString("parkingTitle", marker.getTitle());
@@ -199,7 +199,7 @@ public class MapFragment extends Fragment {
                 LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
-                markerOptions.title("Current Position");
+                markerOptions.title("Moja lokacija");
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 myMarker = googleMap.addMarker(markerOptions);
             }
